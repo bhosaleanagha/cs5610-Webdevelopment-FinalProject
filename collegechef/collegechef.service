@@ -1,0 +1,16 @@
+[Unit]
+Description=College Chef
+
+[Service]
+Type=simple
+User=game
+Group=game
+Restart=on-failure
+Environment=MIX_ENV=prod "PORT=4997"
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/game/CS5610-P2/collegechef
+ExecStart=/bin/bash /home/game/CS5610-P2/collegechef/start.sh
+
+[Install]
+WantedBy=multi-user.target
