@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import Form from '../components/form';
 
 
-const API_KEY = "c4294a872dmsh22aef79132e1caap1e9a0ejsne854fa0f13e3"
-const API_HOST = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+
 
 class Home extends Component {
     getRecipeWithIngredients =  async (ev) => {
