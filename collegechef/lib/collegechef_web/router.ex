@@ -9,6 +9,23 @@ defmodule CollegechefWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :ajax do
+    plug :accepts, ["json"]
+    plug :fetch_session
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+  scope "/ajax", CollegechefWeb do
+    pipe_through :ajax
+
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/recipes", RecipeController, except: [:new, :edit]
+    resources "/sessions", SessionController, only: [:create], singleton: true
+    resources "/ingredients", IngredientController, except: [:new, :edit]
+
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
