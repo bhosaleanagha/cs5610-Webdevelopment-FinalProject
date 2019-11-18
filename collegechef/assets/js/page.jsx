@@ -1,12 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router';
-import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-router-dom';
-import { Alert, Button, Container, Col, Form, InputGroup, Input, InputGroupAddon, Jumbotron, Navbar, Nav, Row } from 'react-bootstrap';
-import image from './bgimage.jpeg'
-import $ from 'jquery';
-
-import Home from './pages/home_page';
+import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
+import { Button, Container, Col, Form, InputGroup, Jumbotron, Navbar, Nav } from 'react-bootstrap';
 
 export default function init_page(root) {
   ReactDOM.render(<Page />, root);
@@ -16,10 +12,7 @@ function goSearch() {
 	return <Redirect to="/search" />
 }
 
-
-
 function Page(props) {
-console.log(image);
   return (
     <Router>
       <Navbar bg="dark" variant="dark">
@@ -83,14 +76,3 @@ console.log(image);
     </Router>
   );
 }
-
-const image1 = "bgimage.jpeg";
-const styles = {
-    color: 'blue',
-  	backgroundImage: 'url(' + image + ')',
-  }
-  
-const style2 = {
-	
-}
-
