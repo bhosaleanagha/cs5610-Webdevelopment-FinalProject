@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, ModalHeader, ModalBody,
     Button, FormGroup, Form, Label, Input, Row } from 'reactstrap';
-
+    import { Redirect } from 'react-router-dom'
 
 
 class Login extends React.Component {
@@ -9,9 +9,11 @@ class Login extends React.Component {
         super(props);
 
         this.state = {
-            isModalOpen: false,
+            isModalOpen: true,
+            redirect: null,
           }
-      
+      console.log("I am in login");
+      console.log(this);
           this.toggleModal = this.toggleModal.bind(this);
           this.handleLogin = this.handleLogin.bind(this);
     }
@@ -19,16 +21,27 @@ class Login extends React.Component {
     toggleModal() {
         this.setState({
           isModalOpen: !this.state.isModalOpen
-        });
+        }); 
+        var path = "/";
+        this.redirect(path);
       }
 
+      redirect(path) {
+        this.setState({
+          redirect: path,
+        });
+      }
+    
+
     handleLogin(event) {
+        console.log(event);
         this.toggleModal();
         alert("User name: " + this.username.value + " Password: " + this.password.value);
         event.preventDefault();
       }
 
     render() {
+    if(this.state.redirect == null){
         return (
             <Modal isOpen={this.state.isModalOpen} fade={false} toggle={this.toggleModal}>
                 <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
@@ -50,6 +63,10 @@ class Login extends React.Component {
             </Modal>
         )
     }
+else {
+    return <Redirect to={this.state.redirect} />
+}
+}
 }
 
 export default Login;
