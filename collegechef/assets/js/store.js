@@ -31,6 +31,15 @@ function login(st0 = {email: "", password: "", errors: null}, action) {
   }
 }
 
+function search(st0 = {searchWords: ""}, action){
+    switch(action.type){
+        case 'CHANGE_WORDS':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function feedback(st0 = {firstname: "", lastname: "", telnum: "",email: "", agree: false, contactType: 'Tel.', message: "", errors: null}, action) {
   switch(action.type) {
     case 'CHANGE_LOGIN':
@@ -46,43 +55,13 @@ function forms(st0, action) {
       feedback: feedback
     }),
     login,
+    search
   });
   return reducer(st0, action);
 }
 
 function users(st0 = new Map(), action) {
   return st0;
-}
-
-function jobs(st0 = new Map(), action) {
-  switch (action.type) {
-    case 'GET_JOBS':
-      let st1 = new Map(st0);
-      for (let job of action.data) {
-        st1.set(job.id, job);
-      }
-      return st1;
-    default:
-      return st0;
-  }
-}
-
-function timesheets(st0 = new Map(), action){
-  let st1 = new Map(st0);
-  switch(action.type){
-    case 'ADD_TIMESHEET':
-      for(let ts of action.data){
-        st1.set(ts.id, ts);
-      }
-      return st1;
-    case 'GET_TIMESHEETS':
-      for(let ts of action.data){
-        st1.set(ts.id, ts);
-      }
-      return st1;
-    default:
-      return st0;
-  }
 }
 
 let session0 = localStorage.getItem('session');

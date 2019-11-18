@@ -13,6 +13,8 @@ import Footer from './pages/footer';
 import store from './store';
 import Register from './pages/register';
 import Login from './pages/login';
+import SearchResults from './pages/searchResults';
+import Search from './pages/search';
 
 export default function init_page(root) {
   let tree = (
@@ -23,9 +25,14 @@ export default function init_page(root) {
   ReactDOM.render(tree, root);
 }
 
+function state2props(state) {
+  return state.forms.search;
+}
+
 class Page extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
 
     this.state = {
       isNavOpen: false,
@@ -82,23 +89,13 @@ class Page extends React.Component {
               </Collapse>
             </div>
           </Navbar>
-          <Jumbotron>
-            <div className="container">
-              <div className="row row-header">
-                <div className="col-12 col-sm-6">
-                  <h1>College Chef</h1>
-                  <p>We take pride in helping the college students be the master chefs in their kitchen by using the ingredients available in their fridge.</p>
-                </div>
-              </div>
-            </div>
-          </Jumbotron>
           <Switch>
-            <Route exact path='/'>
-            </Route>
+            <Route exact path='/' component={() => <Search />} />
             <Route exact path='/contactus' component={() => <Contact />} />
             <Route exact path='/aboutus' component={() => <About />} />
             <Route exact path='/register' component={() => <Register />} />
             <Route exact path='/login' component={() => <Login />} />
+            <Route exact path='/search' component={() => <SearchResults />} />
           </Switch>
           <Footer />
         </Router>
@@ -108,7 +105,7 @@ class Page extends React.Component {
 }
 
 
-let Session = connect(({session}) => ({session}))(({session, dispatch}) => {
+let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
   function logout(ev) {
     ev.preventDefault();
     localStorage.removeItem('session');
@@ -118,14 +115,14 @@ let Session = connect(({session}) => ({session}))(({session, dispatch}) => {
   }
 
   if (session) {
-      return(
-        <Nav>
+    return (
+      <Nav>
         <Nav.Item>
           <p className="text-light py-2">{session.user_name}</p>
         </Nav.Item>
         <Nav.Item>
           <NavLink to="/" exact activeClassName="active" className="nav-link" onClick={logout}>
-              Logout
+            Logout
           </NavLink>
         </Nav.Item>
       </Nav>
