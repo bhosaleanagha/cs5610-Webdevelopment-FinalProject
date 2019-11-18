@@ -92,6 +92,8 @@ class Page extends React.Component {
               </div>
             </div>
           </Jumbotron>
+
+          
           <Switch>
             <Route exact path='/'>
             </Route>
@@ -140,7 +142,7 @@ let Session = connect(({session}) => ({session}))(({session, dispatch}) => {
           </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <NavLink to="/register" exact activeClassName="active" className="nav-link">
+          <NavLink to="/regiser" exact activeClassName="active" className="nav-link">
             Register
           </NavLink>
         </Nav.Item>
