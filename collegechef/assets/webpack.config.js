@@ -24,7 +24,21 @@ module.exports = (env, options) => ({
         path: path.resolve(__dirname, '../priv/static/js')
     },
     module: {
-        rules: [{
+        rules: [
+            {
+
+				test: /\.(png|jpg|jpeg|gif)$/,
+
+				use: [{
+
+				loader: 'url-loader',
+
+				options: {}
+
+				}]
+
+            },
+            {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
