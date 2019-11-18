@@ -6,6 +6,8 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
+require("@babel/polyfill");
+
 module.exports = (env, options) => ({
     optimization: {
         minimizer: [
@@ -13,8 +15,9 @@ module.exports = (env, options) => ({
             new OptimizeCSSAssetsPlugin({})
         ]
     },
+    entry: ["@babel/polyfill", "./app/js"],
     entry: {
-        './js/app.js': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
+        './js/app.js': glob.sync('./vendor/**/*.js').concat(['./js/app.js']),
     },
     output: {
         filename: 'app.js',
@@ -27,7 +30,10 @@ module.exports = (env, options) => ({
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        plugins: [
+                            '@babel/plugin-proposal-class-properties'
+                        ]
                     },
                 },
             },

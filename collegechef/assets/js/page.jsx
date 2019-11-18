@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 
+import Home from './pages/home_page';
+
 export default function init_page(root) {
   ReactDOM.render(<Page />, root);
 }
@@ -27,7 +29,7 @@ function Page(props) {
 
       <Switch>
         <Route exact path="/">
-          <h1>Welcome To College Chef</h1>
+          < Home />
         </Route>
 
         <Route exact path="/users">
