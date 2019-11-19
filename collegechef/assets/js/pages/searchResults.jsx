@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 function SearchResults(props){
-    console.log(props);
+    console.log("Props: " + props);
     return(
         <h1>This is search page</h1>
     );

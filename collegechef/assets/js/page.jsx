@@ -6,6 +6,7 @@ import {
 } from 'reactstrap';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
+import logo from './logo.jpg';
 
 import Contact from './pages/contactus';
 import About from './pages/aboutus'
@@ -23,10 +24,6 @@ export default function init_page(root) {
     </Provider>
   );
   ReactDOM.render(tree, root);
-}
-
-function state2props(state) {
-  return state.forms.search;
 }
 
 class Page extends React.Component {
@@ -59,7 +56,7 @@ class Page extends React.Component {
         <Router>
           <Navbar className="navbar-dark" expand="md">
             <div className="container">
-              <NavbarBrand className="mr-auto" href="/"><img src='../images/logo.jpg' height="30" width="41" alt='Collegechef' /></NavbarBrand>
+              <NavbarBrand className="mr-auto" href="/"><img src={logo} height="40" width="50" alt='Collegechef' /></NavbarBrand>
               <NavbarToggler onClick={this.toggleNav}><span className="fa fa-list"></span></NavbarToggler>
               <Collapse isOpen={this.state.isNavOpen} navbar>
                 <Navbar>
@@ -137,7 +134,7 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
           </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <NavLink to="/regiser" exact activeClassName="active" className="nav-link">
+          <NavLink to="/register" exact activeClassName="active" className="nav-link">
             Register
           </NavLink>
         </Nav.Item>

@@ -31,7 +31,8 @@ function login(st0 = {email: "", password: "", errors: null}, action) {
   }
 }
 
-function search(st0 = {searchWords: ""}, action){
+function search(st0 = {searchWords: []}, action){
+  console.log("Words: " + action.data);
     switch(action.type){
         case 'CHANGE_WORDS':
             return Object.assign({}, st0, action.data);

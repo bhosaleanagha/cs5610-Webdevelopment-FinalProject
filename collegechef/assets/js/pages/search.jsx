@@ -5,16 +5,41 @@ import { connect } from 'react-redux';
 
 import { Redirect } from 'react-router';
 import { get_recipes } from '../ajax';
+import { WithContext as ReactTags } from 'react-tag-input';
+
+const KeyCodes = {
+    comma: 188,
+    enter: 13,
+};
+
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect : null,
+            redirect: null,
+            tags: [],
+            suggestions: [],
         }
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleAddition = this.handleAddition.bind(this);
+        this.check = this.check.bind(this);
+    }
+
+    handleDelete(i) {
+        const { tags } = this.state;
+        this.setState({
+            tags: tags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAddition(tag) {
+        this.setState(state => ({ tags: [...state.tags, tag] }));
     }
 
     changed(data) {
+        console.log("DATA " +data);
         this.props.dispatch({
             type: 'CHANGE_WORDS',
             data: data,
@@ -23,11 +48,23 @@ class Search extends React.Component {
 
     redirect(path) {
         this.setState({
-          redirect: path,
+            redirect: path,
         });
-      }
+    }
+
+    check() {
+        console.log("Hello");
+        let keyword = this.state.tags;
+        let keywords = [];
+        for (let i = 0; i < keyword.length; i++) {
+            keywords.push(keyword[i]["id"]);
+        }
+        console.log(keywords);
+        this.changed(keywords);
+    }
 
     render() {
+        const { tags, suggestion } = this.state;
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }
@@ -40,6 +77,9 @@ class Search extends React.Component {
                             <p>We take pride in helping the college students be the master chefs in their kitchen by using the ingredients available in their fridge.</p>
                         </div>
                     </div>
+
+                    <br />
+                    <br />
                     <Col md="8">
                     </Col>
                     <br />
@@ -49,23 +89,25 @@ class Search extends React.Component {
                     <br />
                     <br />
 
-
-                    <InputGroup className="mb-3">
-                        <Form.Control
-                            placeholder="What's in your fridge?" controlid="search" onChange={
-                                (ev) => this.changed({ searchWords: ev.target.value })} />
-                        <InputGroup.Append>
-                            <Button variant="info" onClick={() => get_recipes(this)}>Go!</Button>
-                        </InputGroup.Append>
-                    </InputGroup>
+                    <div className="row">
+                        <div className="col-9 col-sm-12 col-md-9">
+                            <ReactTags
+                                tags={tags}
+                                handleDelete={this.handleDelete}
+                                handleAddition={this.handleAddition}
+                                delimiters={delimiters}
+                                placeholder="What's in your fridge?"
+                                allowUnique={true} />
+                        </div>
+                        <div className="col-3 col-md-3">
+                            <Button variant="info" onClick={() => this.check()}>Go!</Button>
+                        </div>
+                    </div>
 
                 </Container>
-
-                <br />
-                <br />
-
             </Jumbotron>
         )
+
     }
 }
 

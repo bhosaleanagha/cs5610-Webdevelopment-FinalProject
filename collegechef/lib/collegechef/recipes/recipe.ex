@@ -10,6 +10,8 @@ defmodule Collegechef.Recipes.Recipe do
     field :duration, :integer
     field :likes, :integer
     field :name, :string
+    field :data, :string
+    field :ingredients, :string
 
     belongs_to :user, Collegechef.Users.User
 
@@ -19,7 +21,7 @@ defmodule Collegechef.Recipes.Recipe do
   @doc false
   def changeset(recipe, attrs) do
     recipe
-    |> cast(attrs, [:cuisine, :name, :diet, :duration, :description, :likes, :dislikes])
+    |> cast(attrs, [:cuisine, :name, :diet, :duration, :description, :likes, :dislikes, :ingredients, :user_id])
     |> validate_required([:cuisine, :name, :diet, :duration, :description, :likes, :dislikes])
   end
 end

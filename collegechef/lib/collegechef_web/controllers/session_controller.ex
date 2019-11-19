@@ -3,7 +3,7 @@ defmodule CollegechefWeb.SessionController do
   
     action_fallback CollegechefWeb.FallbackController
   
-    alias Hw07.Users
+    alias Collegechef.Users
   
     def create(conn, %{"email" => email, "password" => password}) do
       user = Users.authenticate_user(email, password)

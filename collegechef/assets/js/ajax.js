@@ -61,7 +61,8 @@ export function list_photos() {
 export function get_recipes(form){
     let state = store.getState();
     let data = state.forms.search;
-    console.log(data);
+    let keywords = Array.from(data.searchWords);
+    console.log("Keywords: " + keywords);
     form.redirect('/search');
 }
 

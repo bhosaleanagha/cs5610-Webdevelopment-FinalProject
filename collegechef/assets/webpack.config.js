@@ -26,17 +26,11 @@ module.exports = (env, options) => ({
     module: {
         rules: [
             {
-
 				test: /\.(png|jpg|jpeg|gif)$/,
-
 				use: [{
-
 				loader: 'url-loader',
-
 				options: {}
-
 				}]
-
             },
             {
                 test: /\.(js|jsx)$/,
