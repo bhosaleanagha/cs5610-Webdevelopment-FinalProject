@@ -23,6 +23,7 @@ defmodule CollegechefWeb.Router do
     resources "/recipes", RecipeController, except: [:new, :edit]
     resources "/sessions", SessionController, only: [:create], singleton: true
     resources "/ingredients", IngredientController, except: [:new, :edit]
+    resources "/dbsearch", DBSearchController, only: [:create], singleton: true
 
   end
 

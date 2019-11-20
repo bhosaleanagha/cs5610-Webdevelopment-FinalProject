@@ -72,12 +72,24 @@ function session(st0 = session0, action) {
     }
 }
 
+function recipes(st0 = session0, action) {
+    switch (action.type) {
+        case 'DBSEARCH_RESULTS':
+            //console.log("Session Log in:" + action.data);
+            return action.data;
+        default:
+            return st0;
+    }
+}
+
 function root_reducer(st0, action) {
+
     console.log("root reducer", st0, action);
     let reducer = combineReducers({
         forms,
         users,
         session,
+        recipes,
     });
     return deepFreeze(reducer(st0, action));
 }

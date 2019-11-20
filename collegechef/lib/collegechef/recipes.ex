@@ -55,6 +55,13 @@ defmodule Collegechef.Recipes do
     |> Repo.insert()
   end
 
+  def get_recipes!(attrs \\ %{}) do
+    query = from(rec in Recipe, where: like(rec.ingredients, ^"%#{attrs}%"), select: rec)
+    res = Repo.all(query)
+    IO.inspect(res)
+    res
+  end
+
   @doc """
   Updates a recipe.
 

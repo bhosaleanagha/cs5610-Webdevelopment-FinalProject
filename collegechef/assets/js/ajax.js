@@ -23,7 +23,11 @@ export function post(path, body) {
 
 export function get(path) {
     let state = store.getState();
-    let token = state.session.token;
+    let token = "";
+    if (state.session) {
+        token = state.session.token;
+        console.log(token);
+    }
 
     return fetch('/ajax' + path, {
         method: 'get',
@@ -40,9 +44,15 @@ export function get(path) {
 export function get_recipes(form) {
     let state = store.getState();
     let data = state.forms.search;
-    let keywords = Array.from(data.searchWords);
-    console.log("Keywords: " + keywords);
-    form.redirect('/search');
+    post('/dbsearch', data)
+        .then((resp) => {
+            if (resp.data) {
+                console.log(resp.data);
+                form.redirect('/search');
+            } else {
+                console.log("Errors " + resp.errors);
+            }
+        });
 }
 
 export function submit_register(form) {

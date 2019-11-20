@@ -24,6 +24,7 @@ class Search extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.check = this.check.bind(this);
+        //this.changed = this.changed.bind(this);
     }
 
     handleDelete(i) {
@@ -38,7 +39,6 @@ class Search extends React.Component {
     }
 
     changed(data) {
-        console.log("DATA " +data);
         this.props.dispatch({
             type: 'CHANGE_WORDS',
             data: data,
@@ -58,8 +58,8 @@ class Search extends React.Component {
         for (let i = 0; i < keyword.length; i++) {
             keywords.push(keyword[i]["id"]);
         }
-        console.log(keywords);
-        this.changed(keywords);
+        this.changed({searchWords: keywords});
+        get_recipes(this);
     }
 
     render() {
@@ -77,7 +77,6 @@ class Search extends React.Component {
                             <p>We take pride in helping the college students be the master chefs in their kitchen by using the ingredients available in their fridge.</p>
                         </div>
                     </div>
-
                     <div className="row">
                         <div className="col-9 col-sm-12 col-md-9">
                             <ReactTags
@@ -92,7 +91,6 @@ class Search extends React.Component {
                             <Button variant="info" onClick={() => this.check()}>Go!</Button>
                         </div>
                     </div>
-
                 </Container>
             </Jumbotron>
         )
