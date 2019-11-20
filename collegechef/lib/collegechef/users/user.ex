@@ -17,12 +17,7 @@ defmodule Collegechef.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-<<<<<<< HEAD
     |> cast(attrs, [:email, :name, :password])
-=======
-    |> cast(attrs, [:name, :email])
-    |> validate_required([:name, :email])
->>>>>>> e24ebbf2be1f1de3676964f93850f5ae84c1c93f
     |> hash_password()
     |> validate_required([:email, :name, :password_hash])
   end
