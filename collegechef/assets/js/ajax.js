@@ -59,14 +59,17 @@ export function submit_register(form) {
     let state = store.getState();
     let data = state.forms.register;
 
-    post('/users', data)
-        .then((resp) => {
-            store.dispatch({
-                type: 'REGISTER_USER',
-                data: { errors: JSON.stringify(resp.errors) },
-            });
-            form.redirect('/');
-        })
+    console.log("This is the state: ", state)
+    console.log("This is the data: ", data)
+
+    // post('/users', data)
+    //     .then((resp) => {
+    //         store.dispatch({
+    //             type: 'REGISTER_USER',
+    //             data: { errors: JSON.stringify(resp.errors) },
+    //         });
+    //         form.redirect('/');
+    //     })
 }
 
 export function submit_login(form) {

@@ -7,6 +7,9 @@ import { NavbarBrand, NavbarToggler, Collapse, Col} from 'reactstrap';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 import logo from '../static/images/logo.jpg';
+import {Form, Label, Input, FormGroup} from 'reactstrap';
+import {submit_register} from './ajax';
+
 
 import Contact from './pages/contactus';
 import About from './pages/aboutus'
@@ -16,6 +19,8 @@ import store from './store';
 import Login from './pages/login';
 import SearchResults from './pages/searchResults';
 import Search from './pages/search';
+
+
 
 export default function init_page(root) {
   let tree = (
@@ -130,42 +135,64 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
           </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <Register/>
+          <Register store={store}/>
         </Nav.Item>
       </Nav>
     );
   }
 });
 
-let Register = () => {
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
+// Should be a component
+let Register = (props) => {
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
 
-    return (
-      <div>
-        <Button color="primary" onClick={toggle}>Register</Button>
-        <Modal isOpen={modal} toggle={toggle} >
-          <ModalHeader toggle={toggle}>Sign Up</ModalHeader>
-          <ModalBody>
-                <Form onSubmit={console.log("Submitted")}>
-                    <FormGroup>
-                        <Label htmlFor="username">Username</Label>
-                        <Input type="text" id="username" name="username"
-                            innerRef={(input) => this.username = input} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label htmlFor="password">Password</Label>
-                        <Input type="password" id="password" name="password"
-                            innerRef={(input) => this.password = input} />
-                    </FormGroup>
-                    <Button type="submit" value="submit" color="primary">Login</Button>
-                </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={toggle}>Cancel</Button>
-          </ModalFooter>
-        </Modal>
-      </div>
-    );    
+
+  function handleRegister(event){
+    event.preventDefault();
+    console.log(event.target)
+     
+     store.dispatch({
+      type: 'REGISTER_USER',
+      data: formdata,
+    })
+    
+    submit_register(formdata);
+  }
+
+  return (
+    <div>
+      <Button color="primary" onClick={toggle}>Register</Button>
+      <Modal isOpen={modal} toggle={toggle} >
+        <ModalHeader toggle={toggle}>Sign Up</ModalHeader>
+        <ModalBody>
+              <Form onSubmit={handleRegister}>
+                  <FormGroup>
+                      <Label htmlFor="first_name">First Name</Label>
+                      <Input type="text" id="first_name" name="first_name" />
+                  </FormGroup>
+                  <FormGroup>
+                      <Label htmlFor="last_name">Last Name</Label>
+                      <Input type="text" id="last_name" name="last_name"/>
+                  </FormGroup>
+                  <FormGroup>
+                      <Label htmlFor="email">Email</Label>
+                      <Input type="text" id="email" name="email"/>
+                  </FormGroup>
+                  <FormGroup>
+                      <Label htmlFor="password">Password</Label>
+                      <Input type="password" id="password" name="password"/>
+                  </FormGroup>
+                  <FormGroup>
+                      <Label htmlFor="confirmed_password">Comfirmed Password</Label>
+                      <Input type="password" id="confirmed_password" name="confirmed_password"/>
+                  </FormGroup>
+                  
+                  <Button color="primary" >Register</Button>
+                  <Button color="secondary" onClick={toggle}>Cancel</Button>
+              </Form>
+        </ModalBody>
+      </Modal>
+    </div>
+  );    
 }

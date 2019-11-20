@@ -11,7 +11,7 @@ function login(st0 = { email: "", password: "", errors: null }, action) {
     }
 }
 
-function register(st0 = { email: "", password: "", errors: null }, action) {
+function register(st0 = { first_name: "", last_name: "", email: "", password: "", errors: null }, action) {
     switch (action.type) {
         case 'REGISTER_USER':
             return Object.assign({}, st0, action.data);

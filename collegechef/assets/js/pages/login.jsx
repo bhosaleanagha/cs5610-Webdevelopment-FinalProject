@@ -12,8 +12,8 @@ class Login extends React.Component {
             isModalOpen: true,
             redirect: null,
           }
-      console.log("I am in login");
-      console.log(this);
+
+          console.log(this);
           this.toggleModal = this.toggleModal.bind(this);
           this.handleLogin = this.handleLogin.bind(this);
     }
