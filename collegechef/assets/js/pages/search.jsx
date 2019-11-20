@@ -1,10 +1,9 @@
 import React from 'react';
-import { Alert, Button, Container, Form, InputGroup, Row, Col } from 'react-bootstrap';
+import { Button, Container} from 'react-bootstrap';
 import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import { Redirect } from 'react-router';
-import { get_recipes } from '../ajax';
 import { WithContext as ReactTags } from 'react-tag-input';
 
 const KeyCodes = {
@@ -64,12 +63,13 @@ class Search extends React.Component {
     }
 
     render() {
-        const { tags, suggestion } = this.state;
+        const { tags } = this.state;
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }
+        
         return (
-            <Jumbotron fluid>
+            <Jumbotron className="jumbo" >
                 <Container >
                     <div className="row row-header">
                         <div className="col-12 col-sm-6">
@@ -77,17 +77,6 @@ class Search extends React.Component {
                             <p>We take pride in helping the college students be the master chefs in their kitchen by using the ingredients available in their fridge.</p>
                         </div>
                     </div>
-
-                    <br />
-                    <br />
-                    <Col md="8">
-                    </Col>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
 
                     <div className="row">
                         <div className="col-9 col-sm-12 col-md-9">

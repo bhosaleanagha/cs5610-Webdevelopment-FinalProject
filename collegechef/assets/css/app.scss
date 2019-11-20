@@ -1,87 +1,87 @@
 /* This file is for your main application css. */
 
 @import "~bootstrap/scss/bootstrap";
-
 .row-header {
     margin: 0px auto;
-    padding: 0px 0px; }
-  
-  .row-content {
+    padding: 0px 0px;
+}
+
+.row-content {
     margin: 0px auto;
     padding: 50px 0px;
     border-bottom: 1px ridge;
-    min-height: 400px; }
-  
-  .footer {
-    background-color: #643D01;
-    margin: 0px auto;
-    padding: 20px 0px; }
-  
-  .jumbotron {
-    margin: 0px auto;
-    padding: 70px 30px;
-    background-image: url('../js/bgimage.jpeg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    height: 1000px;
-    color: floralwhite;
-    border-bottom:1px solid #ff6a00
+    min-height: 400px;
 }
 
-.jumbotron .container {
-  position:relative;
-  top:50px;
+.footer {
+    background-color: #643D01;
+    margin: 0px auto;
+    padding: 20px 0px;
 }
-  
-  .address {
+
+.jumbo {
+    background-image: url('../static/images/background_image.jpeg');
+    background-repeat: no-repeat;
+}
+
+.address {
     font-size: 80%;
     margin: 0px;
-    color: white; }
-  
-  body {
+    color: white;
+}
+
+body {
     padding-top: 50px 0px;
-    z-index: 0; }
-  
-  .navbar-dark {
+    z-index: 0;
+}
+
+.navbar-dark {
     background-color: #643D01;
-    color: floralwhite; }
-    
-  .modal .modal-header {
+    color: floralwhite;
+}
+
+.modal .modal-header {
     background-color: #643D01;
-    color: floralwhite; }
-    .modal .modal-header .close {
-      color: floralwhite; }
-  
-  .modal .modal-body {
-    background-color: #AA8350; }
-  
-  .page-enter {
+    color: floralwhite;
+}
+
+.modal .modal-header .close {
+    color: floralwhite;
+}
+
+.modal .modal-body {
+    background-color: #AA8350;
+}
+
+.page-enter {
     opacity: 0.01;
     transform: translateX(-100%);
-  }
+}
 
-  .page-enter-active {
+.page-enter-active {
     opacity: 1;
     transform: translateX(0%);
     transition: all 300ms ease-in;
-  }
+}
 
-  .page-exit {
+.page-exit {
     opacity: 1;
     transform: translateX(0%);
-  }
+}
 
-  .page-exit-active {
+.page-exit-active {
     opacity: 0.01;
     transform: translateX(-100%);
     transition: all 300ms ease-out;
-  }
+}
 
-  div.ReactTags__tags {
+div.ReactTags__tags {
     position: relative;
 }
 
+
 /* Styles for the input */
+
 div.ReactTags__tagInput {
     width: 200px;
     border-radius: 2px;
@@ -98,7 +98,9 @@ div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
     padding: 0 4px;
 }
 
+
 /* Styles for selected tags */
+
 div.ReactTags__selected span.ReactTags__tag {
     border: 1px solid black;
     background: brown;
@@ -112,7 +114,7 @@ div.ReactTags__selected span.ReactTags__tag {
 }
 
 div.ReactTags__selected a.ReactTags__remove {
-    color:black;
+    color: black;
     margin-left: 5px;
     cursor: pointer;
 }

@@ -16,5 +16,5 @@ alias Collegechef.Users.User
 
 pw = Argon2.hash_pwd_salt("password12345")
 
-alice = Repo.insert!(%User{name: "Alice", email: "alice@example.com", password_hash: pw, age: 22})
-Repo.insert!(%Recipe{cuisine: "Beverage", name: "Coffee", diet: "Vegeterian", duration: 20, description: "Heat milk. Add suagr. Add coffee powder and stir. Coffee is ready.", likes: 2, dislikes: 0, ingredients: "Milk, Sugar, Coffee powder", user_id: alice.id })
+# alice = Repo.insert!(%User{name: "Alice", email: "alice@example.com", password_hash: pw, age: 22})
+# Repo.insert!(%Recipe{cuisine: "Beverage", name: "Coffee", diet: "Vegeterian", duration: 20, description: "Heat milk. Add suagr. Add coffee powder and stir. Coffee is ready.", likes: 2, dislikes: 0, ingredients: "Milk, Sugar, Coffee powder", user_id: alice.id })

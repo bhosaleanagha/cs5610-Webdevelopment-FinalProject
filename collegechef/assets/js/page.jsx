@@ -1,18 +1,18 @@
-import React from 'react';
+import React ,{ useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-router-dom';
-import {
-  NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron, Col
-} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
+import { NavbarBrand, NavbarToggler, Collapse, Col} from 'reactstrap';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
-import logo from './logo.jpg';
+import logo from '../static/images/logo.jpg';
 
 import Contact from './pages/contactus';
 import About from './pages/aboutus'
 import Footer from './pages/footer';
 import store from './store';
-import Register from './pages/register';
+// import Register from './pages/register';
 import Login from './pages/login';
 import SearchResults from './pages/searchResults';
 import Search from './pages/search';
@@ -29,13 +29,12 @@ export default function init_page(root) {
 class Page extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
 
     this.state = {
       isNavOpen: false,
     }
 
-    this.toggleNav = this.toggleNav.bind(this);
+    this.toggleNav = this.toggleNav.bind(this); // For Phone view
   }
 
   toggleNav() {
@@ -43,12 +42,7 @@ class Page extends React.Component {
       isNavOpen: !this.state.isNavOpen
     });
   }
-
-  handleLogin(event) {
-    this.toggleModal();
-    alert("User name: " + this.username.value + " Password: " + this.password.value);
-    event.preventDefault();
-  }
+  
 
   render() {
     return (
@@ -56,7 +50,7 @@ class Page extends React.Component {
         <Router>
           <Navbar className="navbar-dark" expand="md">
             <div className="container">
-              <NavbarBrand className="mr-auto" href="/"><img src={logo} height="40" width="50" alt='Collegechef' /></NavbarBrand>
+              <NavbarBrand className="mr-auto"><img src={logo} height="40" width="50" alt='Collegechef' /></NavbarBrand>
               <NavbarToggler onClick={this.toggleNav}><span className="fa fa-list"></span></NavbarToggler>
               <Collapse isOpen={this.state.isNavOpen} navbar>
                 <Navbar>
@@ -87,11 +81,13 @@ class Page extends React.Component {
             </div>
           </Navbar>
           <Switch>
-            <Route exact path='/' component={() => <Search />} />
+            <Route exact path='/' component={Search} />
+            <Route exact path='/login' component={Login} />
+            {/* <Route exact path='/register' component={Register} /> */}
+
+
             <Route exact path='/contactus' component={() => <Contact />} />
             <Route exact path='/aboutus' component={() => <About />} />
-            <Route exact path='/register' component={() => <Register />} />
-            <Route exact path='/login' component={() => <Login />} />
             <Route exact path='/search' component={() => <SearchResults />} />
           </Switch>
           <Footer />
@@ -134,11 +130,42 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
           </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <NavLink to="/register" exact activeClassName="active" className="nav-link">
-            Register
-          </NavLink>
+          <Register/>
         </Nav.Item>
       </Nav>
     );
   }
 });
+
+let Register = () => {
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
+    return (
+      <div>
+        <Button color="primary" onClick={toggle}>Register</Button>
+        <Modal isOpen={modal} toggle={toggle} >
+          <ModalHeader toggle={toggle}>Sign Up</ModalHeader>
+          <ModalBody>
+                <Form onSubmit={console.log("Submitted")}>
+                    <FormGroup>
+                        <Label htmlFor="username">Username</Label>
+                        <Input type="text" id="username" name="username"
+                            innerRef={(input) => this.username = input} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label htmlFor="password">Password</Label>
+                        <Input type="password" id="password" name="password"
+                            innerRef={(input) => this.password = input} />
+                    </FormGroup>
+                    <Button type="submit" value="submit" color="primary">Login</Button>
+                </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );    
+}
