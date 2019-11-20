@@ -23,7 +23,11 @@ export function post(path, body) {
 
 export function get(path) {
   let state = store.getState();
-  let token = state.session.token;
+  let token = "";
+  if(state.session){
+    token = state.session.token;
+    console.log(token);
+  }
 
   return fetch('/ajax' + path, {
     method: 'get',
@@ -61,9 +65,16 @@ export function list_photos() {
 export function get_recipes(form){
     let state = store.getState();
     let data = state.forms.search;
-    let keywords = Array.from(data.searchWords);
-    console.log("Keywords: " + keywords);
-    form.redirect('/search');
+    post('/dbsearch', data)
+    .then((resp) => {
+      if (resp.data) {
+        console.log(resp.data);
+        form.redirect('/search');
+      }
+      else {
+        console.log("Errors " + resp.errors);
+      }
+    });
 }
 
 export function get_timesheets(){
@@ -100,90 +111,3 @@ export function submit_login(form) {
       }
     });
 }
-
-
-export function submit_timesheet(form) {
-  let state = store.getState();
-  let data = state.forms.new_timesheet;
-
-  post('/timesheets', {
-    timesheet: {
-      user_id: data.user_id,
-      hr1: data.hr1,
-      hr2: data.hr2,
-      hr3: data.hr3,
-      hr4: data.hr4,
-      hr5: data.hr5,
-      hr6: data.hr6,
-      hr7: data.hr7,
-      hr8: data.hr8,
-      jobid1: data.jobid1,
-      jobid2: data.jobid2,
-      jobid3: data.jobid3,
-      jobid4: data.jobid4,
-      jobid5: data.jobid5,
-      jobid6: data.jobid6,
-      jobid7: data.jobid7,
-      jobid8: data.jobid8,
-      date: data.date,
-      status: data.status
-    }
-  }).then((resp) => {
-      if (resp.data) {
-          store.dispatch({
-            type: 'ADD_TIMESHEET',
-            data: [resp.data],
-          });
-        form.redirect('/users/worker');
-      }
-      else {
-        store.dispatch({
-          type: 'CHANGE_NEW_TIMESHEET',
-          data: {errors: JSON.stringify(resp.errors)},
-        });
-      }
-    });
-  }
-
-  export function approve_timesheet(id) {
-    let state = store.getState();
-    let data = state.forms.new_timesheet;
-  
-    post('/timesheets/'+id, {
-      timesheet: {
-        user_id: data.user_id,
-        hr1: data.hr1,
-        hr2: data.hr2,
-        hr3: data.hr3,
-        hr4: data.hr4,
-        hr5: data.hr5,
-        hr6: data.hr6,
-        hr7: data.hr7,
-        hr8: data.hr8,
-        jobid1: data.jobid1,
-        jobid2: data.jobid2,
-        jobid3: data.jobid3,
-        jobid4: data.jobid4,
-        jobid5: data.jobid5,
-        jobid6: data.jobid6,
-        jobid7: data.jobid7,
-        jobid8: data.jobid8,
-        date: data.date,
-        status: data.status
-      }
-    }).then((resp) => {
-        if (resp.data) {
-            store.dispatch({
-              type: 'GET_TIMESHEETS',
-              data: [resp.data],
-            });
-          form.redirect('/users/manager');
-        }
-        else {
-          store.dispatch({
-            type: 'CHANGE_NEW_TIMESHEET',
-            data: {errors: JSON.stringify(resp.errors)},
-          });
-        }
-      });
-    }

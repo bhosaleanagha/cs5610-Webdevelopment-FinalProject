@@ -8,7 +8,7 @@ function SearchResults(props){
 }
 
 function state2props(state) {
-    return state.forms.search;
+    return state.recipes;
 }
 
 

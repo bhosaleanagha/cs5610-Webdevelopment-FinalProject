@@ -3,8 +3,6 @@ defmodule Collegechef.Users.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :address, :string
-    field :age, :integer
     field :email, :string
     field :name, :string
     field :password, :string, virtual: true
@@ -18,7 +16,7 @@ defmodule Collegechef.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :age, :address])
+    |> cast(attrs, [:name, :email])
     |> validate_required([:name, :email])
     |> hash_password()
     |> unique_constraint(:email)
