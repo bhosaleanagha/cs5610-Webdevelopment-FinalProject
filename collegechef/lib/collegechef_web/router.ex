@@ -19,8 +19,8 @@ defmodule CollegechefWeb.Router do
   scope "/ajax", CollegechefWeb do
     pipe_through :ajax
 
-    resources "/users", UserController, except: [:new, :edit]
-    resources "/recipes", RecipeController, except: [:new, :edit]
+    resources "/users", UserController
+    resources "/recipes", RecipeController
     resources "/sessions", SessionController, only: [:create], singleton: true
     resources "/ingredients", IngredientController, except: [:new, :edit]
     resources "/dbsearch", DBSearchController, only: [:create], singleton: true

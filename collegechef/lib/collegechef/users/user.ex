@@ -4,7 +4,8 @@ defmodule Collegechef.Users.User do
 
   schema "users" do
     field :email, :string
-    field :name, :string
+    field :first_name, :string
+    field :last_name, :string
     field :password_hash, :string
 
     has_many :recipes, Collegechef.Recipes.Recipe
@@ -17,9 +18,9 @@ defmodule Collegechef.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :name, :password])
+    |> cast(attrs, [:email, :first_name, :last_name, :password])
     |> hash_password()
-    |> validate_required([:email, :name, :password_hash])
+    |> validate_required([:email, :first_name, :last_name, :password_hash])
   end
 
   def hash_password(cset) do

@@ -17,6 +17,7 @@ defmodule CollegechefWeb.RecipeView do
       diet: recipe.diet,
       duration: recipe.duration,
       description: recipe.description,
+      ingredients: recipe.ingredients,
       likes: recipe.likes,
       dislikes: recipe.dislikes}
   end

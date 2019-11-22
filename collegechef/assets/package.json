@@ -25,8 +25,10 @@
         "react-hot-loader": "^4.12.18",
         "react-redux": "^4.4.10",
         "react-redux-form": "^1.16.8",
+        "react-router-bootstrap": "^0.25.0",
         "react-router-dom": "^5.1.2",
         "react-tag-input": "^6.4.1",
+        "react-transition-group": "^4.3.0",
         "reactstrap": "^8.0.1",
         "redux": "^3.7.2"
     },

@@ -20,8 +20,7 @@ function register(st0 = { first_name: "", last_name: "", email: "", password: ""
     }
 }
 
-function search(st0 = { searchWords: [] }, action) {
-    console.log("Words: " + action.data);
+function home_search(st0 = { searchWords: [] }, action) {
     switch (action.type) {
         case 'CHANGE_WORDS':
             return Object.assign({}, st0, action.data);
@@ -46,7 +45,7 @@ function forms(st0, action) {
         }),
         login,
         register,
-        search
+        home_search
     });
     return reducer(st0, action);
 }
