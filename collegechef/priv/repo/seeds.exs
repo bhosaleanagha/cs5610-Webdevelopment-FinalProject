@@ -18,4 +18,5 @@ pw = Argon2.hash_pwd_salt("password12345")
 
 alice = Repo.insert!(%User{first_name: "Alice", last_name: "Anderson", email: "alice@example.com", password_hash: pw})
 Repo.insert!(%Recipe{cuisine: "Beverage", name: "Coffee", diet: "Vegeterian", duration: 20, description: "Heat milk. Add suagr. Add coffee powder and stir. Coffee is ready.", likes: 2, dislikes: 0, ingredients: "Milk, Sugar, Coffee powder", user_id: alice.id })
-Repo.insert!(%Recipe{cuisine: "Beverage", name: "Coffee", diet: "Vegeterian", duration: 20, description: "Heat water. Add sugar and tea powder.Boil. Add milk. Tea is ready.", likes: 2, dislikes: 0, ingredients: "Tea, Milk, Sugar", user_id: alice.id })
+Repo.insert!(%Recipe{cuisine: "Beverage", name: "Tea", diet: "Vegeterian", duration: 20, description: "Heat water. Add sugar and tea powder.Boil. Add milk. Tea is ready.", likes: 2, dislikes: 0, ingredients: "Tea, Milk, Sugar", user_id: alice.id })
+Repo.insert!(%Recipe{cuisine: "Italian", name: "Pasta", diet: "Vegeterian", duration: 20, description: "Heat Pan. Add oil. Add tomatoes. Add onions. Boil pasta", likes: 2, dislikes: 0, ingredients: "Tomatoes, Onions, Sugar, Pasta", user_id: alice.id })

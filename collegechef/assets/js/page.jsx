@@ -11,59 +11,89 @@ import Home from './components/home';
 
 
 export default function init_page(root) {
+// import Register from './pages/register';
+import Login from './pages/login';
+import SearchResults from './pages/searchResults';
+import Search from './pages/search';
+
+export default function init_page(root, channel) {
   let tree = (
     <Provider store={store}>
-      <Page />
+      <Page channel = {channel} />
     </Provider>
   );
   ReactDOM.render(tree, root);
 }
 
-function Page(props){
-  return(
-    <Router>
-     <Navbar bg="dark" variant="dark" expand="md">
-        <Col md="8">
-          <Nav>
-            <Nav.Item>
-              <NavLink to="/" exact activeClassName="active" className="nav-link">
-                Home
-              </NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/about" exact activeClassName="active" className="nav-link">
-                About
-              </NavLink>
-            </Nav.Item>
-          </Nav>
-        </Col>
-        <Col md="4">
-          <Session />
-        </Col>
-     </Navbar>
-     <ModalSwitch />
-    </Router>
-  )
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.channel = props.channel;
+
+    this.state = {
+      isNavOpen: false,
+    }
+
+    this.channel
+    .join()
+    .receive("ok", console.log("Joined"))
+    .receive("error", resp => { console.log("Unable to join", resp); });
+    this.toggleNav = this.toggleNav.bind(this);
+  }
+
+  toggleNav() {
+    this.setState({
+      isNavOpen: !this.state.isNavOpen
+    });
+  }
+  
+
+  render() {
+    return(
+      <Router>
+       <Navbar bg="dark" variant="dark" expand="md">
+          <Col md="8">
+            <Nav>
+              <Nav.Item>
+                <NavLink to="/" exact activeClassName="active" className="nav-link">
+                  Home
+                </NavLink>
+              </Nav.Item>
+              <Nav.Item>
+                <NavLink to="/about" exact activeClassName="active" className="nav-link">
+                  About
+                </NavLink>
+              </Nav.Item>
+            </Nav>
+          </Col>
+          <Col md="4">
+            <Session />
+          </Col>
+       </Navbar>
+       <ModalSwitch />
+      </Router>
+    )
+  }
 }
 
 function ModalSwitch() {
-  let location = useLocation();
-  let background = location.state && location.state.background;
-
-  return (
-    <div>
-      <Switch location={background || location}>
-        <Route exact path='/' component={Home}/>
-        <Route exact path='/about' component={Home}/>
-        <Route path='/login' component={Login} />
-        <Route path='/register' component={Register} />
-        <Route path='/profile' component={Profile} />
-      </Switch>
-      {background && <Route path="/login" component={Login} />}
-      {background && <Route path="/register" component={Register} />}
-    </div>
-  )
-}
+    let location = useLocation();
+    let background = location.state && location.state.background;
+  
+    return (
+      <div>
+        <Switch location={background || location}>
+          <Route exact path='/' component={Home}/>
+          <Route exact path='/about' component={Home}/>
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+          <Route path='/profile' component={Profile} />
+        </Switch>
+        {background && <Route path="/login" component={Login} />}
+        {background && <Route path="/register" component={Register} />}
+      </div>
+    )
+  }
 
 let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
   let location = useLocation();
@@ -120,5 +150,5 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
       </Nav>
     );
   }
-});
-
+})
+}

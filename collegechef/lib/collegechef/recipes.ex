@@ -55,11 +55,22 @@ defmodule Collegechef.Recipes do
     |> Repo.insert()
   end
 
+  # might use later with channels.
   def get_recipes!(attrs \\ %{}) do
-    query = from(rec in Recipe, where: like(rec.ingredients, ^"%#{attrs}%"), select: rec)
-    res = Repo.all(query)
-    IO.inspect(res)
-    res
+    inter = Enum.reduce attrs, %{}, fn keyword, acc ->
+      query = from(rec in Recipe, where: like(rec.ingredients, ^"%#{keyword}%"), select: rec)
+      res = Repo.all(query)
+      Enum.reduce res, acc, fn recipe, acc ->
+        if Map.has_key?(acc, recipe.id) do
+          acc
+        else
+          res = %{"id" => recipe.id, "cuisine" => recipe.cuisine, "name" => recipe.name, "data" => recipe.data, "ingredients" => recipe.ingredients, 
+          "description" => recipe.description, "diet" => recipe.diet, "dislikes" => recipe.dislikes, "like" => recipe.likes, "duration" => recipe.duration}
+          Map.put(acc, recipe.id, res)
+        end
+      end
+    end
+    inter
   end
 
   @doc """

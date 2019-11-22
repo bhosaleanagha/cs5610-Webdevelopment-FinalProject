@@ -2,6 +2,7 @@
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
 import css from "../css/app.scss";
+import socket from "./socket";
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -20,5 +21,6 @@ import init_page from './page';
 
 window.addEventListener("load", () => {
     let root = document.getElementById('root');
-    init_page(root);
+    let channel = socket.channel("recipes:"+"recipes", {});
+    init_page(root, channel);
 });
