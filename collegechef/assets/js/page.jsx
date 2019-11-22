@@ -37,11 +37,6 @@ class Page extends React.Component {
     this.state = {
       isNavOpen: false,
     }
-
-    this.channel
-    .join()
-    .receive("ok", console.log("Joined"))
-    .receive("error", resp => { console.log("Unable to join", resp); });
     this.toggleNav = this.toggleNav.bind(this);
   }
 
