@@ -22,11 +22,9 @@ class Home extends React.Component {
             redirect: "",
             tags: [],
         }
-        this.channel
-        .join()
-        .receive("ok", this.got_view.bind(this))
-        .receive("error", resp => { console.log("Unable to join", resp); });
         
+
+
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.check = this.check.bind(this);

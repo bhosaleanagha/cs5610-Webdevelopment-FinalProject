@@ -10,11 +10,10 @@ import Profile from './components/profile';
 import Home from './components/home';
 
 
-export default function init_page(root) {
 // import Register from './pages/register';
-import Login from './pages/login';
-import SearchResults from './pages/searchResults';
-import Search from './pages/search';
+// import Login from './pages/login';
+// import SearchResults from './pages/searchResults';
+// import Search from './pages/search';
 
 export default function init_page(root, channel) {
   let tree = (
@@ -34,10 +33,6 @@ class Page extends React.Component {
       isNavOpen: false,
     }
 
-    this.channel
-    .join()
-    .receive("ok", console.log("Joined"))
-    .receive("error", resp => { console.log("Unable to join", resp); });
     this.toggleNav = this.toggleNav.bind(this);
   }
 
@@ -47,7 +42,6 @@ class Page extends React.Component {
     });
   }
   
-
   render() {
     return(
       <Router>
@@ -70,20 +64,21 @@ class Page extends React.Component {
             <Session />
           </Col>
        </Navbar>
-       <ModalSwitch />
+       <ModalSwitch channel={this.channel}/>
       </Router>
     )
   }
 }
 
-function ModalSwitch() {
+function ModalSwitch(props) {
+
     let location = useLocation();
     let background = location.state && location.state.background;
   
     return (
       <div>
         <Switch location={background || location}>
-          <Route exact path='/' component={Home}/>
+          <Route exact path='/' component={() => <Home channel={props.channel}/>}/>
           <Route exact path='/about' component={Home}/>
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
@@ -151,4 +146,3 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
     );
   }
 })
-}
