@@ -35,3 +35,5 @@ npm-debug.log
 
 # production env vars
 prod-env.sh
+
+/assests/package-lock.json

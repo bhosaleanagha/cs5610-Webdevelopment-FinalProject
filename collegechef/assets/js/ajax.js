@@ -2,11 +2,7 @@ import store from './store';
 
 export function post(path, body) {
     let state = store.getState();
-    let token = "";
-    if (state.session) {
-        token = state.session.token;
-        console.log(token);
-    }
+    let token = state.session && state.session.token;
 
     return fetch('/ajax' + path, {
         method: 'post',
@@ -23,11 +19,7 @@ export function post(path, body) {
 
 export function get(path) {
     let state = store.getState();
-    let token = "";
-    if (state.session) {
-        token = state.session.token;
-        console.log(token);
-    }
+    let token = state.session && state.session.token;
 
     return fetch('/ajax' + path, {
         method: 'get',
@@ -43,12 +35,12 @@ export function get(path) {
 
 export function get_recipes(form) {
     let state = store.getState();
-    let data = state.forms.search;
+    let data = state.forms.home_search;
     post('/dbsearch', data)
         .then((resp) => {
             if (resp.data) {
                 console.log(resp.data);
-                form.redirect('/search');
+                form.redirect('/home');
             } else {
                 console.log("Errors " + resp.errors);
             }
@@ -59,17 +51,25 @@ export function submit_register(form) {
     let state = store.getState();
     let data = state.forms.register;
 
-    console.log("This is the state: ", state)
-    console.log("This is the data: ", data)
+    post('/users', {
+        user: {
+            user_id: data.user_id,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email,
+            password: data.password,
+        }
+    }).then((resp) => {
+        if (resp.data) {
+            store.dispatch({
+                type: 'REGISTER_USER',
+                data: [resp.data],
+            });
+            form.redirect('/');
+        } else {
 
-    // post('/users', data)
-    //     .then((resp) => {
-    //         store.dispatch({
-    //             type: 'REGISTER_USER',
-    //             data: { errors: JSON.stringify(resp.errors) },
-    //         });
-    //         form.redirect('/');
-    //     })
+        }
+    })
 }
 
 export function submit_login(form) {

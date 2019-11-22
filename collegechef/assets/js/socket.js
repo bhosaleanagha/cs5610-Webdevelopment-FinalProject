@@ -6,7 +6,7 @@
 //
 // Pass the token on params as below. Or remove it
 // from the params if you are not using authentication.
-import {Socket} from "phoenix"
+import { Socket } from "phoenix"
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -51,10 +51,9 @@ import {Socket} from "phoenix"
 //
 // Finally, connect to the socket:
 // Now that you are connected, you can join channels with a topic:
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket("/socket", { params: { token: window.userToken } })
 
 socket.connect()
-
-let channel = socket.channel("recipes:"+"recipes", {})
+let channel = socket.channel("recipes:" + "recipes", {})
 
 export default socket

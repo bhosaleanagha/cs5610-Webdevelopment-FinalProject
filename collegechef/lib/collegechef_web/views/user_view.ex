@@ -12,9 +12,9 @@ defmodule CollegechefWeb.UserView do
 
   def render("user.json", %{user: user}) do
     %{id: user.id,
-      name: user.name,
-      email: user.email,
-      age: user.age,
-      address: user.address}
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email
+    }
   end
 end

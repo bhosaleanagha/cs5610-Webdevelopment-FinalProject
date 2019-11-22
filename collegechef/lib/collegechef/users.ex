@@ -37,6 +37,14 @@ defmodule Collegechef.Users do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def authenticate_user(email, password) do
+    user = Repo.get_by(User, email: email)
+    case Argon2.check_pass(user, password) do
+      {:ok, user} -> user
+      _else       -> nil
+    end
+  end
+
   @doc """
   Creates a user.
 
