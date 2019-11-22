@@ -17,10 +17,10 @@ import Login from './pages/login';
 import SearchResults from './pages/searchResults';
 import Search from './pages/search';
 
-export default function init_page(root) {
+export default function init_page(root, channel) {
   let tree = (
     <Provider store={store}>
-      <Page />
+      <Page channel = {channel} />
     </Provider>
   );
   ReactDOM.render(tree, root);
@@ -29,12 +29,15 @@ export default function init_page(root) {
 class Page extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
-
+    this.channel = props.channel;
     this.state = {
       isNavOpen: false,
     }
 
+    this.channel
+    .join()
+    .receive("ok", console.log("Joined"))
+    .receive("error", resp => { console.log("Unable to join", resp); });
     this.toggleNav = this.toggleNav.bind(this);
   }
 
@@ -87,7 +90,7 @@ class Page extends React.Component {
             </div>
           </Navbar>
           <Switch>
-            <Route exact path='/' component={() => <Search />} />
+            <Route exact path='/' component={() => <Search channel = {this.channel}/>} />
             <Route exact path='/contactus' component={() => <Contact />} />
             <Route exact path='/aboutus' component={() => <About />} />
             <Route exact path='/register' component={() => <Register />} />

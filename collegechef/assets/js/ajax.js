@@ -68,8 +68,8 @@ export function get_recipes(form){
     post('/dbsearch', data)
     .then((resp) => {
       if (resp.data) {
-        console.log(resp.data);
-        form.redirect('/search');
+        console.log("res" + esp.data);
+        //form.redirect('/search');
       }
       else {
         console.log("Errors " + resp.errors);

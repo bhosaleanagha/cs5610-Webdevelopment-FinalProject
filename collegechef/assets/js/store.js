@@ -84,8 +84,7 @@ function session(st0 = session0, action) {
 function recipes(st0 = session0, action) {
   switch (action.type) {
     case 'DBSEARCH_RESULTS':
-        //console.log("Session Log in:" + action.data);
-      return action.data;
+      return Object.assign({}, st0, action.data);
     default:
       return st0;
   }

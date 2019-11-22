@@ -2,6 +2,14 @@
 
 @import "~bootstrap/scss/bootstrap";
 
+#root{
+  min-height: 100vh; /* will cover the 100% of viewport */
+  overflow: hidden;
+  display: block;
+  position: relative;
+  padding-bottom: 100px;
+}
+
 .row-header {
     margin: 0px auto;
     padding: 0px 0px; }
@@ -13,7 +21,11 @@
     min-height: 400px; }
   
   .footer {
+    position: relative; 
+    bottom: 0;
+    height: 10rem;
     background-color: #643D01;
+    width: 100%;
     margin: 0px auto;
     padding: 20px 0px; }
   

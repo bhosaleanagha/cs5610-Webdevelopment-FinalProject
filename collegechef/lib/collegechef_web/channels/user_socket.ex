@@ -3,6 +3,7 @@ defmodule CollegechefWeb.UserSocket do
 
   ## Channels
   # channel "room:*", CollegechefWeb.RoomChannel
+  channel "recipes:*", CollegechefWeb.RecipesChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

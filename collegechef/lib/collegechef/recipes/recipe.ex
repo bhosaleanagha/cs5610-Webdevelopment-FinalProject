@@ -22,6 +22,6 @@ defmodule Collegechef.Recipes.Recipe do
   def changeset(recipe, attrs) do
     recipe
     |> cast(attrs, [:cuisine, :name, :diet, :duration, :description, :likes, :dislikes, :ingredients, :user_id])
-    |> validate_required([:cuisine, :name, :diet, :duration, :description, :likes, :dislikes])
+    |> validate_required([:cuisine, :name, :diet, :duration, :description, :likes, :dislikes, :ingredients, :user_id])
   end
 end
