@@ -5,10 +5,11 @@ defmodule Collegechef.Users.User do
   schema "users" do
     field :email, :string
     field :name, :string
-    field :password, :string, virtual: true
     field :password_hash, :string
 
     has_many :recipes, Collegechef.Recipes.Recipe
+
+    field :password, :string, virtual: true
 
     timestamps()
   end
@@ -16,10 +17,9 @@ defmodule Collegechef.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email])
-    |> validate_required([:name, :email])
+    |> cast(attrs, [:email, :name, :password])
     |> hash_password()
-    |> unique_constraint(:email)
+    |> validate_required([:email, :name, :password_hash])
   end
 
   def hash_password(cset) do
