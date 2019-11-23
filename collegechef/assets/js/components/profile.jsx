@@ -57,12 +57,8 @@ class Profile extends React.Component {
     }
 
     render() {
-        if (this.state.redirect) {
-            return <Redirect to={this.state.redirect} />
-        }
-        console.log("Hello")
         return (
-            0
+            <h1>Profile</h1>
         )
 
     }

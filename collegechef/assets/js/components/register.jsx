@@ -48,7 +48,7 @@ class Register extends React.Component {
       if(this.state.redirect == null){
         return (
             <Modal isOpen={this.state.isModalOpen} fade={false} toggle={this.toggleModal}>
-                <ModalHeader toggle={this.toggleModal}>Sign Up</ModalHeader>
+                <ModalHeader toggle={this.toggleModal}>Register</ModalHeader>
                 { error_msg }
                 <ModalBody>
                   <Form>
