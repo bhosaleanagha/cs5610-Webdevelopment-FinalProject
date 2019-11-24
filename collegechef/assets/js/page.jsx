@@ -11,9 +11,8 @@ import Profile from './components/profile';
 import Register from './components/register'
 import Login from './components/login';
 // import UserRecipes from './components/my_recipes';
-// import AddRecipes from './components/add_recipes';
 import PowerSearch from './components/power_search';
-
+import AddRecipes from './components/addRecipes';
 
 
 // import Register from './pages/register';
@@ -88,9 +87,9 @@ function ModalSwitch(props) {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/profile' component={Profile} />
+          <Route path='/add-recipes' component={AddRecipes} />
           <Route path='/power-search' component={PowerSearch} />
           {/* <Route path='/my-recipes' component={UserRecipes} /> */}
-          {/* <Route path='/add-recipes' component={AddRecipes} /> */}
         </Switch>
         {background && <Route path="/login" component={Login} />}
         {background && <Route path="/register" component={Register} />}

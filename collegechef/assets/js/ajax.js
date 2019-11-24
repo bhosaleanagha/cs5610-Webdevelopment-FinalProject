@@ -39,7 +39,6 @@ export function get_recipes(form) {
     post('/dbsearch', data)
         .then((resp) => {
             if (resp.data) {
-                console.log(resp.data);
                 form.redirect('/home');
             } else {
                 console.log("Errors " + resp.errors);
@@ -70,6 +69,114 @@ export function submit_register(form) {
 
         }
     })
+}
+
+export function add_recipe(cuisine, description, diet, duration, name, data, ingredients, form) {
+    let session0 = localStorage.getItem('session');
+    let user_id = "";
+    if (session0) {
+        session0 = JSON.parse(session0);
+        user_id = session0.user_id;
+    }
+    if (data!= null) {
+        let reader = new FileReader();
+        reader.addEventListener("load", () => {
+            post('/recipes', {
+                recipe: {
+                    user_id: user_id,
+                    cuisine: cuisine,
+                    name: name,
+                    duration: duration,
+                    ingredients: ingredients,
+                    diet: diet,
+                    description: description,
+                    dislikes: 0,
+                    likes: 0,
+                    data: reader.result,
+                }
+            }).then((resp) => {
+                if (resp.data) {
+                    store.dispatch({
+                        type: 'ADDED_RECIPE',
+                        data: [resp.data],
+                    });
+                    form.redirect('/');
+                }
+                else {
+                    store.dispatch({
+                        type: 'ADD_RECIPE',
+                        data: { errors: JSON.stringify(resp.errors) },
+                    });
+                }
+            });
+        });
+        reader.readAsDataURL(data[0]);
+    }
+    else {
+        post('/recipes', {
+            recipe: {
+                user_id: user_id,
+                cuisine: cuisine,
+                name: name,
+                duration: duration,
+                ingredients: ingredients,
+                diet: diet,
+                description: description,
+                dislikes: 0,
+                likes: 0,
+                data: null,
+            }
+        }).then((resp) => {
+            if (resp.data) {
+                console.log("Success");
+                store.dispatch({
+                    type: 'ADDED_RECIPE',
+                    data: [resp.data],
+                });
+                form.redirect('/');
+            }
+            else {
+                store.dispatch({
+                    type: 'ADD_RECIPE',
+                    data: { errors: JSON.stringify(resp.errors) },
+                });
+            }
+        });
+    }
+}
+
+export function get_ingredients() {
+    get('/ingredients')
+        .then((resp) => {
+            store.dispatch({
+                type: 'GET_INGREDIENTS',
+                data: resp.data,
+            });
+        });
+}
+
+export function add_ingredient(form) {
+    let state = store.getState();
+    let data = state.forms.new_ingredient;
+
+    post('/ingredients', {
+        ingredient: {
+            name: data.name
+        }
+    }).then((resp) => {
+        if (resp.data) {
+            store.dispatch({
+                type: 'ADD_INGREDIENT',
+                data: [resp.data],
+            });
+        }
+        else {
+            store.dispatch({
+                type: 'CHANGE_NEW_TIMESHEET',
+                data: { errors: JSON.stringify(resp.errors) },
+            });
+        }
+    });
 }
 
 export function submit_login(form) {

@@ -38,14 +38,38 @@ function feedback(st0 = { firstname: "", lastname: "", telnum: "", email: "", ag
     }
 }
 
+function addrecipes(st0 = { name: "", duration: 0, ingredients: "", cuisine: "", description: "", diet: "", dislikes: 0, likes: 0, data: null, user_id: "" }, action) {
+    let session0 = localStorage.getItem('session');
+    if (session0) {
+        session0 = JSON.parse(session0);
+        st0 = Object.assign({}, st0, { user_id: session0.user_id });
+    }
+    let st1 = Object.values(st0);
+    let ingr = st1[2];
+    if (ingr) {
+        if (Array.isArray(ingr)) {
+            ingr = ingr.join(', ');
+            st0 = Object.assign({}, st0, { ingredients: ingr });
+        }
+    }
+    switch (action.type) {
+        case 'ADD_RECIPE':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function forms(st0, action) {
     let reducer = combineReducers({
         ...createForms({
-            feedback: feedback
+            feedback: feedback,
+            addrecipes: addrecipes
         }),
         login,
         register,
-        home_search
+        home_search,
+        new_ingredient
     });
     return reducer(st0, action);
 }
@@ -71,13 +95,52 @@ function session(st0 = session0, action) {
     }
 }
 
-function recipes(st0 = session0, action) {
-  switch (action.type) {
-    case 'DBSEARCH_RESULTS':
-      return Object.assign({}, st0, action.data);
-    default:
-      return st0;
-  }
+function recipes(st0 = {}, action) {
+    switch (action.type) {
+        case 'DBSEARCH_RESULTS':
+            return Object.assign({}, st0, action.data);
+        case 'CLEAR_RESULTS':
+            let rec = st0;
+            let res = Object.values(rec);
+            for (let i = 0; i < res.length; i++) {
+                let ingr = res[i]["ingredients"];
+                if (ingr.includes(action.data)) {
+                    delete res[i];
+                }
+            }
+            return res;
+        case 'ADDED_RECIPE':
+            return st0;
+        default:
+            return st0;
+    }
+}
+
+function new_ingredient(st0 = { name: "" }, action) {
+    switch (action.type) {
+        case 'ADD_NEW_INGREDIENT':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
+function ingredients(st0 = new Map(), action) {
+    let st1 = new Map(st0);
+    switch (action.type) {
+        case 'ADD_INGREDIENT':
+            for (let ts of action.data) {
+                st1.set(ts.id, ts);
+            }
+            return st1;
+        case 'GET_INGREDIENTS':
+            for (let ts of action.data) {
+                st1.set(ts.id, ts);
+            }
+            return st1;
+        default:
+            return st0;
+    }
 }
 
 function root_reducer(st0, action) {
@@ -88,6 +151,7 @@ function root_reducer(st0, action) {
         users,
         session,
         recipes,
+        ingredients
     });
     return deepFreeze(reducer(st0, action));
 }
