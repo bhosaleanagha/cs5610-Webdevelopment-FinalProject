@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, NavLink, useLocation} from "react-router-dom";
 import { Navbar, Nav, Col, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
+
 import store from './store';
+
+import Home from './components/home';
+import Profile from './components/profile';
 import Register from './components/register'
 import Login from './components/login';
 import Profile from './components/profile';
@@ -61,7 +65,7 @@ class Page extends React.Component {
             </Nav>
           </Col>
           <Col md="4">
-            <Session />
+            <Session props={this.props}/>
           </Col>
        </Navbar>
        <ModalSwitch channel={this.channel}/>
@@ -84,6 +88,9 @@ function ModalSwitch(props) {
           <Route path='/register' component={Register} />
           <Route path='/profile' component={Profile} />
           <Route path='/addrecipes' component={AddRecipe} />
+          {/* <Route path='/power-search' component={PowerSearch} /> */}
+          {/* <Route path='/my-recipes' component={UserRecipes} /> */}
+          {/* <Route path='/add-recipes' component={AddRecipes} /> */}
         </Switch>
         {background && <Route path="/login" component={Login} />}
         {background && <Route path="/register" component={Register} />}
@@ -100,10 +107,6 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
     dispatch({
       type: 'LOG_OUT',
     });
-  }
-
-  function redirectToProfile(ev){
-    ev.preventDefault();
   }
 
   if (session) {
