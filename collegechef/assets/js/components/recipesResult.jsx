@@ -28,7 +28,6 @@ class Results extends React.Component {
         const { currentPage } = this.state;
         return (
             <React.Fragment>
-                <Row>
                     <div className="pagination-wrapper">
                         <Pagination aria-label="Page navigation example">
                             <PaginationItem disabled={currentPage <= 0}>
@@ -54,7 +53,6 @@ class Results extends React.Component {
                             </PaginationItem>
                         </Pagination>
                     </div>
-                </Row>
                 <Row>
                     {this.recipes
                         .slice(

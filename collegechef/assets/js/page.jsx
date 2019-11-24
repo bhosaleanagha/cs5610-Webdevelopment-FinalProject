@@ -10,8 +10,6 @@ import Home from './components/home';
 import Profile from './components/profile';
 import Register from './components/register'
 import Login from './components/login';
-import Profile from './components/profile';
-import Home from './components/home';
 import AddRecipe from './components/addRecipes';
 
 

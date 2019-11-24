@@ -16,8 +16,6 @@ const KeyCodes = {
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-
-
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -120,9 +118,7 @@ function Recipes({ root }) {
     if (Object.keys(recipes).length > 0) {
         let recipesRes = Object.values(recipes);
         return(
-            <Row>
                 <Results recipes={recipesRes}/>
-            </Row>
         );
 
         //const dishes = recipesRes.map((rec) => {
