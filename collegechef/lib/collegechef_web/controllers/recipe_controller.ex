@@ -6,6 +6,8 @@ defmodule CollegechefWeb.RecipeController do
 
   action_fallback CollegechefWeb.FallbackController
 
+  plug CollegechefWeb.Plugs.RequireAuth when action in [:create, :update, :delete]
+
   def index(conn, _params) do
     recipes = Recipes.list_recipes()
     render(conn, "index.json", recipes: recipes)

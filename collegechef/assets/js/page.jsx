@@ -8,6 +8,7 @@ import Register from './components/register'
 import Login from './components/login';
 import Profile from './components/profile';
 import Home from './components/home';
+import AddRecipe from './components/addRecipes';
 
 
 // import Register from './pages/register';
@@ -82,6 +83,7 @@ function ModalSwitch(props) {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/profile' component={Profile} />
+          <Route path='/addrecipes' component={AddRecipe} />
         </Switch>
         {background && <Route path="/login" component={Login} />}
         {background && <Route path="/register" component={Register} />}
@@ -108,17 +110,17 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
     return (
       <Nav>
         <Nav.Item>
-          <NavLink to={"/"} exact activeClassName="active" className="nav-link">
-            Search Recipes By Ingredients
+          <NavLink to={"/power-search"} exact activeClassName="active" className="nav-link">
+            Power Search
           </NavLink>
         </Nav.Item>
         <Dropdown as={ButtonGroup}>
           <Button variant="outline-light">{'Chef ' + session.user_fname + ' ' + session.user_lname}</Button>
           <Dropdown.Toggle split variant="outline-light" id="dropdown-split-basic" />
           <Dropdown.Menu>
-            <Dropdown.Item onClick={redirectToProfile}>Profile</Dropdown.Item>
-            <Dropdown.Item onClick={console.log("My Recipes")}>My Recipes</Dropdown.Item>
-            <Dropdown.Item onClick={console.log("My Recipes")}>Add Recipes</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to="/profile">Profile</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to="/my-recipes">My Recipes</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to="/addrecipes">Add Recipes</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={logout}>
                 Logout

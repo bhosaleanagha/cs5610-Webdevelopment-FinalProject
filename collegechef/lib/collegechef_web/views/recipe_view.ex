@@ -14,6 +14,7 @@ defmodule CollegechefWeb.RecipeView do
     %{id: recipe.id,
       cuisine: recipe.cuisine,
       name: recipe.name,
+      data: recipe.data,
       diet: recipe.diet,
       duration: recipe.duration,
       description: recipe.description,
