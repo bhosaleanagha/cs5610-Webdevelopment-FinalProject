@@ -88,7 +88,7 @@ function ModalSwitch(props) {
           <Route path='/register' component={Register} />
           <Route path='/profile' component={Profile} />
           <Route path='/add-recipes' component={AddRecipes} />
-          <Route path='/power-search' component={PowerSearch} />
+          <Route path='/power-search' component={() => <PowerSearch channel={props.channel}/>} />
           {/* <Route path='/my-recipes' component={UserRecipes} /> */}
         </Switch>
         {background && <Route path="/login" component={Login} />}

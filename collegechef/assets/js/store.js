@@ -29,6 +29,15 @@ function home_search(st0 = { searchWords: [] }, action) {
     }
 }
 
+function power_search(st0 = { ingredients: "" }, action) {
+    switch (action.type) {
+        case 'CHANGE_POWER_SEARCH':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function feedback(st0 = { firstname: "", lastname: "", telnum: "", email: "", agree: false, contactType: 'Tel.', message: "", errors: null }, action) {
     switch (action.type) {
         case 'CHANGE_LOGIN':
@@ -69,6 +78,7 @@ function forms(st0, action) {
         login,
         register,
         home_search,
+        power_search,
         new_ingredient
     });
     return reducer(st0, action);
@@ -98,6 +108,8 @@ function session(st0 = session0, action) {
 function recipes(st0 = {}, action) {
     switch (action.type) {
         case 'DBSEARCH_RESULTS':
+            return Object.assign({}, st0, action.data);
+        case 'APISEARCH_RESULTS':
             return Object.assign({}, st0, action.data);
         case 'CLEAR_RESULTS':
             let rec = st0;

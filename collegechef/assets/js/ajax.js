@@ -78,7 +78,7 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
         session0 = JSON.parse(session0);
         user_id = session0.user_id;
     }
-    if (data!= null) {
+    if (data != null) {
         let reader = new FileReader();
         reader.addEventListener("load", () => {
             post('/recipes', {
@@ -101,8 +101,7 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
                         data: [resp.data],
                     });
                     form.redirect('/');
-                }
-                else {
+                } else {
                     store.dispatch({
                         type: 'ADD_RECIPE',
                         data: { errors: JSON.stringify(resp.errors) },
@@ -111,8 +110,7 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
             });
         });
         reader.readAsDataURL(data[0]);
-    }
-    else {
+    } else {
         post('/recipes', {
             recipe: {
                 user_id: user_id,
@@ -134,8 +132,7 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
                     data: [resp.data],
                 });
                 form.redirect('/');
-            }
-            else {
+            } else {
                 store.dispatch({
                     type: 'ADD_RECIPE',
                     data: { errors: JSON.stringify(resp.errors) },
@@ -155,6 +152,33 @@ export function get_ingredients() {
         });
 }
 
+// Might not use
+export function submit_powersearch() {
+    let state = store.getState();
+    let data = state.forms.power_search;
+
+    post('/apisearch', data)
+        .then((resp) => {
+            if (resp.data) {
+                console.log("test me")
+            } else {
+                console.log("Errors " + resp.errors);
+            }
+        });
+}
+
+
+
+// export function get_powersearch() {
+//     get('/apisearch')
+//         .then((resp) => {
+//             store.dispatch({
+//                 type: 'APISEARCH_RESULTS',
+//                 data: resp.data
+//             })
+//         })
+// }
+
 export function add_ingredient(form) {
     let state = store.getState();
     let data = state.forms.new_ingredient;
@@ -169,8 +193,7 @@ export function add_ingredient(form) {
                 type: 'ADD_INGREDIENT',
                 data: [resp.data],
             });
-        }
-        else {
+        } else {
             store.dispatch({
                 type: 'CHANGE_NEW_TIMESHEET',
                 data: { errors: JSON.stringify(resp.errors) },
