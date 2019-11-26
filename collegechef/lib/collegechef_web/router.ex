@@ -35,7 +35,6 @@ defmodule CollegechefWeb.Router do
 
     get "/", PageController, :index
     get "/*path", PageController, :index
-
   end
 
   # Other scopes may use custom stacks.
