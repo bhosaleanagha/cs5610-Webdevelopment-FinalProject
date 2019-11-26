@@ -13,6 +13,7 @@ import Login from './components/login';
 // import UserRecipes from './components/my_recipes';
 import PowerSearch from './components/power_search';
 import AddRecipes from './components/addRecipes';
+import NotFound from './components/notfound';
 
 
 // import Register from './pages/register';
@@ -90,6 +91,7 @@ function ModalSwitch(props) {
           <Route path='/add-recipes' component={AddRecipes} />
           <Route path='/power-search' component={() => <PowerSearch channel={props.channel}/>} />
           {/* <Route path='/my-recipes' component={UserRecipes} /> */}
+          <Route component={NotFound}/>
         </Switch>
         {background && <Route path="/login" component={Login} />}
         {background && <Route path="/register" component={Register} />}

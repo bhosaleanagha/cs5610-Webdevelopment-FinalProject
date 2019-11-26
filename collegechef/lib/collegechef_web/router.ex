@@ -21,10 +21,9 @@ defmodule CollegechefWeb.Router do
 
     resources "/users", UserController
     resources "/recipes", RecipeController
-    resources "/sessions", SessionController, only: [:create], singleton: true
     resources "/ingredients", IngredientController, except: [:new, :edit]
+    resources "/sessions", SessionController, only: [:create], singleton: true
     resources "/dbsearch", DBSearchController, only: [:create], singleton: true
-
   end
 
   pipeline :api do

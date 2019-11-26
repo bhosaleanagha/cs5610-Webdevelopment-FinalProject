@@ -20,6 +20,7 @@ defmodule CollegechefWeb.RecipeView do
       description: recipe.description,
       ingredients: recipe.ingredients,
       likes: recipe.likes,
-      dislikes: recipe.dislikes}
+      dislikes: recipe.dislikes
+    }
   end
 end

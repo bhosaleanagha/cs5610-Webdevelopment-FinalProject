@@ -152,33 +152,6 @@ export function get_ingredients() {
         });
 }
 
-// Might not use
-export function submit_powersearch() {
-    let state = store.getState();
-    let data = state.forms.power_search;
-
-    post('/apisearch', data)
-        .then((resp) => {
-            if (resp.data) {
-                console.log("test me")
-            } else {
-                console.log("Errors " + resp.errors);
-            }
-        });
-}
-
-
-
-// export function get_powersearch() {
-//     get('/apisearch')
-//         .then((resp) => {
-//             store.dispatch({
-//                 type: 'APISEARCH_RESULTS',
-//                 data: resp.data
-//             })
-//         })
-// }
-
 export function add_ingredient(form) {
     let state = store.getState();
     let data = state.forms.new_ingredient;

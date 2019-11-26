@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle } from 'reactstrap';
 import { Container } from 'reactstrap';
 import { Button} from 'react-bootstrap';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 
-import {submit_powersearch} from '../ajax';
-
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import Results from './recipesResult';
 
 class PowerSearch extends React.Component {
     constructor(props){
         super(props);
         this.channel = this.props.channel;
+        this.state = {
+          ingredients: ""
+        }
+        this.submit_powersearch = this.submit_powersearch.bind(this);
+    }
+
+    got_view(view) {
+        this.props.dispatch({
+            type: 'APISEARCH_RESULTS',
+            data: view.recipes.recipesRes,
+        });
+        this.redirect(view.recipes.redirect);
     }
 
     redirect(path) {
@@ -22,16 +33,18 @@ class PowerSearch extends React.Component {
         });
     }
 
-    changed(data) {
-        this.props.dispatch({
-          type: 'CHANGE_POWER_SEARCH',
-          data: data,
-        });
-      }
+    setIngredients(ev){
+      this.setState({ingredients: ev})
+    }
 
+    submit_powersearch() {
+      this.channel.push("get_api_recipes", { searchWords: this.state.ingredients })
+          .receive("ok", this.got_view.bind(this));
+    }
 
     render() {            
         return (
+          <div>
                 <Container >
                     <div className="row row-header">
                         <div className="col-12 col-sm-6">
@@ -41,37 +54,54 @@ class PowerSearch extends React.Component {
                     <InputGroup className="mb-3">
                         <Form.Control
                         placeholder="apples,flour,sugar"
-                        onChange={(ev) => this.changed({ingredients: _.lowerCase(ev.target.value)})}
+                        onChange={(ev) => this.setIngredients(ev.target.value)}
                         />
                         <InputGroup.Append>
-                        <Button variant="outline-primary" onClick={()=> submit_powersearch(this)}>Search For Recipes</Button>
+                        <Button variant="outline-primary" onClick={()=> this.submit_powersearch()}>Search For Recipes</Button>
                         </InputGroup.Append>
                     </InputGroup>
                     <div className="recipes_cards">
                     </div>
                 </Container>
+                <DisplayRecipeCard root={this.props}/>
+          </div>
         )
     }
 }
 
-const DisplayRecipeCard = ({recipes}) => {
+
+const DisplayRecipeCard = ({root}) => {
+  let recipes = root.recipes;
+  
+  let allRecipes = Object.values(recipes).map((recipe) => {
     return (
-      <div>
-        <Card>
-          {/* <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" /> */}
+        <Card key={recipe.id}>
+          <CardImg top width="50%" height="50%" src={recipe.image} alt="Card image cap" />
           <CardBody>
-            <CardTitle>Card title</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+            <CardTitle>{recipe.name}</CardTitle> 
+            <CardText>{recipe.ingredients[0].originalString}</CardText>
             <Button>Button</Button>
           </CardBody>
         </Card>
+    )
+  });
+  
+  if (Object.keys(recipes).length > 0){
+    return (
+      <div>
+          {allRecipes}
       </div>
-    );
+    )
+  } else {
+    return (
+      <div></div>
+   );
+  }
 };
 
 function state2props(state) {
-    return state;
+  let st1 = Object.assign({}, state, { forms: state.forms, recipes: state.recipes });
+  return st1;
 }
 
 export default connect(state2props)(PowerSearch);
