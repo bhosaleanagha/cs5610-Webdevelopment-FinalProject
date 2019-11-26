@@ -3,6 +3,10 @@
 // its own CSS file.
 import css from "../css/app.scss";
 import socket from "./socket";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSearch, faKey, faHeart, faHeartBroken, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faSearch, faHeart, faHeartBroken, faThumbsUp, faThumbsDown);
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured

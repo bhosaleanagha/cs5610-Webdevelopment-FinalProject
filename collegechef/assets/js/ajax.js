@@ -33,16 +33,13 @@ export function get(path) {
     }).then((resp) => resp.json());
 }
 
-export function get_recipes(form) {
-    let state = store.getState();
-    let data = state.forms.home_search;
-    post('/dbsearch', data)
+export function get_recipes() {
+    get('/recipes')
         .then((resp) => {
-            if (resp.data) {
-                form.redirect('/home');
-            } else {
-                console.log("Errors " + resp.errors);
-            }
+            store.dispatch({
+                type: 'GET_RECIPES',
+                data: resp.data,
+            });
         });
 }
 

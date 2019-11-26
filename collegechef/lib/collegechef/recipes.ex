@@ -7,6 +7,7 @@ defmodule Collegechef.Recipes do
   alias Collegechef.Repo
 
   alias Collegechef.Recipes.Recipe
+  alias Collegechef.Users.User
 
   @doc """
   Returns the list of recipes.
@@ -64,14 +65,24 @@ defmodule Collegechef.Recipes do
         if Map.has_key?(acc, recipe.id) do
           acc
         else
+          userquery = from(u in User, where: u.id == ^recipe.user_id, select: (fragment("concat(?, ' ', ?)", u.first_name, u.last_name)))
+          us = Repo.all(userquery)
+          [head | tail]= us
           res = %{"id" => recipe.id, "cuisine" => recipe.cuisine, "name" => recipe.name, "data" => recipe.data, "ingredients" => recipe.ingredients, 
-          "description" => recipe.description, "diet" => recipe.diet, "dislikes" => recipe.dislikes, "like" => recipe.likes, "duration" => recipe.duration}
+          "description" => recipe.description, "diet" => recipe.diet, "dislikes" => recipe.dislikes, "like" => recipe.likes, "duration" => recipe.duration, "user" => head}
           Map.put(acc, recipe.id, res)
         end
       end
     end
     inter
   end
+
+  def get_userrecipes!(id) do
+    query = from(rec in Recipe, where: rec.user_id == ^id, select: rec)
+    res = Repo.all(query)
+    res
+  end
+
 
   @doc """
   Updates a recipe.

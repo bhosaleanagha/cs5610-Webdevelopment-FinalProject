@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useLocation} from "react-router-dom";
 import { Navbar, Nav, Col, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 import store from './store';
 
@@ -15,6 +16,7 @@ import Login from './components/login';
 // import UserRecipes from './components/my_recipes';
 import PowerSearch from './components/power_search';
 import AddRecipes from './components/addRecipes';
+import UserRecipes from './components/my_recipes';
 import NotFound from './components/notfound';
 
 
@@ -100,6 +102,10 @@ function ModalSwitch(props) {
         <Switch location={background || location}>
           <Route exact path='/' component={() => <Home channel={props.channel}/>}/>
           <Route exact path='/about' component={Home}/>
+          <Route path='/profile' component={Profile} />
+          <Route path='/add-recipes' component={AddRecipes} />
+          <Route path='/power-search' component={PowerSearch} />
+          <Route path='/my-recipes' component={UserRecipes} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
           {LoginUserRoutes}
@@ -119,6 +125,8 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
     dispatch({
       type: 'LOG_OUT',
     });
+    <Redirect to="/"></Redirect>
+    window.location.reload(false);
   }
 
   if (session) {

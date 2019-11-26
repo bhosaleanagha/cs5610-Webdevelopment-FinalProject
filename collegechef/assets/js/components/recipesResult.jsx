@@ -1,5 +1,7 @@
-import React from 'react';
-import { Pagination, PaginationItem, PaginationLink, Card, CardHeader, CardImgOverlay, CardImg, CardBody, CardTitle, Row } from 'reactstrap';
+import React, { useState } from 'react';
+import { Pagination, PaginationItem, PaginationLink, Card, CardHeader, CardImgOverlay, CardImg, CardBody, CardTitle, Row, Collapse, Button } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import image from '../../static/images/no-image-icon.jpg';
 
 class Results extends React.Component {
 
@@ -7,11 +9,11 @@ class Results extends React.Component {
 
         super(props);
         this.recipes = props.recipes;
-        this.pageSize = 2;
+        this.pageSize = 3;
         this.pagesCount = Math.ceil(this.recipes.length / this.pageSize);
 
         this.state = {
-            currentPage: 0
+            currentPage: 0,
         };
 
     }
@@ -28,7 +30,6 @@ class Results extends React.Component {
         const { currentPage } = this.state;
         return (
             <React.Fragment>
-                <Row>
                     <div className="pagination-wrapper">
                         <Pagination aria-label="Page navigation example">
                             <PaginationItem disabled={currentPage <= 0}>
@@ -54,7 +55,6 @@ class Results extends React.Component {
                             </PaginationItem>
                         </Pagination>
                     </div>
-                </Row>
                 <Row>
                     {this.recipes
                         .slice(
@@ -63,67 +63,88 @@ class Results extends React.Component {
                         )
                         .map((dish) => {
                             if (Object.keys(dish).length > 0) {
-                                if (dish.data != null) {
-                                    return (
-                                        <Card key={dish.id} className="col-4">
-                                            <CardHeader>
-                                                <CardImg width="100%" src={dish.data} alt={dish.name} />
-                                                <CardImgOverlay className="ml-5">
-                                                    <CardTitle id={dish.id}>
-                                                        {dish.name}
-                                                    </CardTitle>
-                                                </CardImgOverlay>
-                                            </CardHeader>
-                                            <CardBody id={dish.id}>
-                                                <ul>
-                                                    <li>Cuisine: {dish.cuisine}</li>
-                                                    <li>Duration: {dish.duration}</li>
-                                                    <li>Igredients: {dish.ingredients}</li>
-                                                    <li>Diet: {dish.diet}</li>
-                                                    <li>Likes: {dish.likes}</li>
-                                                    <li>Dislikes: {dish.dislikes}</li>
-                                                    <li>Procedure:
-                                                    <p className="d-none d-sm-block">{dish.description}</p>
-                                                    </li>
-                                                </ul>
-                                            </CardBody>
-                                        </Card>
-                                    );
-                                }
-                                else {
-                                    return (
-                                        <Card key={dish.id} className="col-4">
-                                            <CardHeader>
-                                                <CardImgOverlay className="ml-5">
-                                                    <CardTitle id={dish.id}>
-                                                        {dish.name}
-                                                    </CardTitle>
-                                                </CardImgOverlay>
-
-                                            </CardHeader>
-                                            <CardBody>
-                                                <ul>
-                                                    <li>Cuisine: {dish.cuisine}</li>
-                                                    <li>Duration: {dish.duration}</li>
-                                                    <li>Igredients: {dish.ingredients}</li>
-                                                    <li>Diet: {dish.diet}</li>
-                                                    <li>Likes: {dish.likes}</li>
-                                                    <li>Dislikes: {dish.dislikes}</li>
-                                                    <li>Procedure:
-                                                    <p className="d-none d-sm-block">{dish.description}</p>
-                                                    </li>
-                                                </ul>
-                                            </CardBody>
-                                        </Card>
-                                    )
-                                }
+                                return(
+                                    <div key={dish.id} className="col-4">
+                                        <RenderMenuItem dish={dish} />
+                                    </div>
+                                );
                             }
                             else {
-                                return;
+                                return (<div>No recipes found! Try again!</div>);
                             }
                         })}
                 </Row>
             </React.Fragment>
+        );
+    }
+}
+
+const RenderMenuItem = ({ dish }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
+    if (dish.data != null) {
+        return (
+            <Card key={dish.id}>
+                <CardHeader>
+                    <CardImg width="100%" src={dish.data} alt={dish.name} />
+                    <CardImgOverlay className="ml-5">
+                        <CardTitle id={dish.id}>
+                            {dish.name}
+                        </CardTitle>
+                    </CardImgOverlay>
+                    <Button onClick={toggle}>Details</Button>
+                </CardHeader>
+
+                <Collapse isOpen={isOpen}>
+                    <CardBody id={dish.id}>
+                        <ul>
+                            <li>Cuisine: {dish.cuisine}</li>
+                            <li>Duration: {dish.duration}</li>
+                            <li>Igredients: {dish.ingredients}</li>
+                            <li>Diet: {dish.diet}</li>
+                            <li>Contributed By: {dish.user}</li>
+                            <li>Procedure:
+                                <p className="d-none d-sm-block">{dish.description}</p>
+                            </li>
+                        </ul>
+                        <FontAwesomeIcon icon="heart"/>{dish.like} {' '} <FontAwesomeIcon icon="heart-broken"/>{dish.dislikes}
+                    </CardBody>
+                </Collapse>
+            </Card>
+        );
+    }
+    else {
+        return (
+            <Card key={dish.id}>
+                <CardHeader>
+                <CardImg width="100%" src={image} alt={dish.name} />
+                    <CardImgOverlay className="ml-5">
+                        <CardTitle id={dish.id}>
+                            {dish.name}
+                        </CardTitle>
+                    </CardImgOverlay>
+                    <Button onClick={toggle}>Details</Button>
+                </CardHeader>
+                <Collapse isOpen={isOpen}>
+                    <CardBody>
+                        <ul>
+                            <li>Cuisine: {dish.cuisine}</li>
+                            <li>Duration: {dish.duration}</li>
+                            <li>Igredients: {dish.ingredients}</li>
+                            <li>Diet: {dish.diet}</li>
+                            <li>Contributed By: {dish.user}</li>
+                            
+                            <li>Dislikes: {dish.dislikes}</li>
+                            <li>Procedure:
+                        <p className="d-none d-sm-block">{dish.description}</p>
+                            </li>
+                            
+                        </ul>
+                        <FontAwesomeIcon icon="heart"/>{dish.like} {' '} <FontAwesomeIcon icon="heart-broken"/>{dish.dislikes}
+                    </CardBody>
+                </Collapse>
+            </Card>
         );
     }
 }
