@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, NavLink, useLocation} from "react-router-dom";
 import { Navbar, Nav, Col, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 import store from './store';
 
@@ -10,7 +11,10 @@ import Home from './components/home';
 import Profile from './components/profile';
 import Register from './components/register'
 import Login from './components/login';
-import AddRecipe from './components/addRecipes';
+// import UserRecipes from './components/my_recipes';
+import PowerSearch from './components/power_search';
+import AddRecipes from './components/addRecipes';
+import UserRecipes from './components/my_recipes';
 
 
 // import Register from './pages/register';
@@ -85,10 +89,9 @@ function ModalSwitch(props) {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/profile' component={Profile} />
-          <Route path='/addrecipes' component={AddRecipe} />
-          {/* <Route path='/power-search' component={PowerSearch} /> */}
-          {/* <Route path='/my-recipes' component={UserRecipes} /> */}
-          {/* <Route path='/add-recipes' component={AddRecipes} /> */}
+          <Route path='/add-recipes' component={AddRecipes} />
+          <Route path='/power-search' component={PowerSearch} />
+          <Route path='/my-recipes' component={UserRecipes} />
         </Switch>
         {background && <Route path="/login" component={Login} />}
         {background && <Route path="/register" component={Register} />}
@@ -98,13 +101,16 @@ function ModalSwitch(props) {
 
 let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
   let location = useLocation();
-
+  console.log(location);
   function logout(ev) {
     ev.preventDefault();
+    
     localStorage.removeItem('session');
     dispatch({
       type: 'LOG_OUT',
     });
+    <Redirect to="/"></Redirect>
+    window.location.reload(false);
   }
 
   if (session) {
@@ -121,7 +127,7 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
           <Dropdown.Menu>
             <Dropdown.Item as={NavLink} to="/profile">Profile</Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/my-recipes">My Recipes</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to="/addrecipes">Add Recipes</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to="/add-recipes">Add Recipes</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item onClick={logout}>
                 Logout

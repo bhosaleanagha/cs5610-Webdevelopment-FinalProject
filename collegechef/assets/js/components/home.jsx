@@ -3,6 +3,9 @@ import { Button, Container } from 'react-bootstrap';
 import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardImgOverlay, CardImg, CardBody, CardTitle, Collapse, Row } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
 import _ from 'lodash';
 
 import { Redirect } from 'react-router';
@@ -101,12 +104,12 @@ class Home extends React.Component {
                                     allowUnique={true} />
                             </div>
                             <div className="col-3 col-md-3">
-                                <Button variant="info" onClick={() => this.check()}>Search For Recipes</Button>
+                                <Button variant="info" onClick={() => this.check()}><FontAwesomeIcon icon="search"/> Search For Recipes</Button>
                             </div>
                         </div>
                     </Container>
                 </Jumbotron>
-                <Recipes root={this.props}/>
+                <Recipes root={this.props} />
             </div>
         )
 
@@ -117,99 +120,17 @@ function Recipes({ root }) {
     let recipes = root.recipes;
     if (Object.keys(recipes).length > 0) {
         let recipesRes = Object.values(recipes);
-        return(
-                <Results recipes={recipesRes}/>
-        );
-
-        //const dishes = recipesRes.map((rec) => {
-            /*
-            if (Object.keys(rec).length > 0) {
-                return (
-                    <div key={rec.id} className="col-12 col-md-5 m-1">
-                        <RenderMenuItem dish={rec} />
-                    </div>
-                );
-            }
-            else {
-                return;
-            }
-            */
-        //});
-        //return dishes;
-    }
-    else {
         return (
-            <div></div>
-        );
-    }
-
-}
-
-const RenderMenuItem = ({ dish }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggle = () => setIsOpen(!isOpen);
-    let did = dish.id.toString();
-    if (dish.data != null) {
-        return (
-            <Card key={dish.id}>
-                <CardHeader>
-                    <CardImg width="100%" src={dish.data} alt={dish.name} />
-                    <CardImgOverlay className="ml-5">
-                        <CardTitle id={dish.id}>
-                            {dish.name}
-                        </CardTitle>
-                    </CardImgOverlay>
-                    <Button onClick={toggle}>Details</Button>
-                </CardHeader>
-
-                <Collapse isOpen={isOpen}>
-                    <CardBody id={dish.id}>
-                        <ul>
-                            <li>Cuisine: {dish.cuisine}</li>
-                            <li>Duration: {dish.duration}</li>
-                            <li>Igredients: {dish.ingredients}</li>
-                            <li>Diet: {dish.diet}</li>
-                            <li>Likes: {dish.likes}</li>
-                            <li>Dislikes: {dish.dislikes}</li>
-                            <li>Procedure:
-                                <p className="d-none d-sm-block">{dish.description}</p>
-                            </li>
-                        </ul>
-                    </CardBody>
-                </Collapse>
-            </Card>
+            <Results recipes={recipesRes} />
         );
     }
     else {
         return (
-            <Card key={dish.id}>
-                <CardHeader>
-                    <CardImgOverlay className="ml-5">
-                        <CardTitle id={dish.id}>
-                            {dish.name}
-                        </CardTitle>
-                    </CardImgOverlay>
-                    <Button onClick={toggle}>Details</Button>
-                </CardHeader>
-                <Collapse isOpen={isOpen}>
-                    <CardBody>
-                        <ul>
-                            <li>Cuisine: {dish.cuisine}</li>
-                            <li>Duration: {dish.duration}</li>
-                            <li>Igredients: {dish.ingredients}</li>
-                            <li>Diet: {dish.diet}</li>
-                            <li>Likes: {dish.likes}</li>
-                            <li>Dislikes: {dish.dislikes}</li>
-                            <li>Procedure:
-                        <p className="d-none d-sm-block">{dish.description}</p>
-                            </li>
-                        </ul>
-                    </CardBody>
-                </Collapse>
-            </Card>
+            <div>
+            </div>
         );
     }
+
 }
 
 function state2props(state) {

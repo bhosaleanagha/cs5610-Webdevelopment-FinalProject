@@ -109,8 +109,25 @@ function recipes(st0 = {}, action) {
                 }
             }
             return res;
-        case 'ADDED_RECIPE':
+        default:
             return st0;
+    }
+}
+
+function userrecipes(st0 = new Map(), action) {
+    let st1 = new Map(st0);
+    switch (action.type) {
+        case 'GET_RECIPES':
+            for(let i=0; i< action.data.length; i++){
+                st1.set(action.data[i]["id"], action.data[i]);
+            }
+            //st1 = Object.assign(st1, {}, {userrecipes: st2, newlyadded: true});
+            return st1;
+        case 'ADDED_RECIPE':
+            for(let i=0; i< action.data.length; i++){
+                st1.set(action.data[i]["id"], action.data[i]);
+            }
+            return st1;
         default:
             return st0;
     }
@@ -151,7 +168,8 @@ function root_reducer(st0, action) {
         users,
         session,
         recipes,
-        ingredients
+        ingredients,
+        userrecipes,
     });
     return deepFreeze(reducer(st0, action));
 }

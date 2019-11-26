@@ -24,7 +24,7 @@ const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 const isNumber = (val) => !isNaN(Number(val));
 
-class AddRecipe extends Component {
+class AddRecipes extends Component {
 
     constructor(props) {
         super(props);
@@ -207,7 +207,7 @@ class AddRecipe extends Component {
                                             allowUnique={true} />
                                     </Col>
                                     <div className="col-3 col-md-3">
-                                        <Button variant="primary" onClick={() => this.add()}>Add</Button>
+                                        <SearchButton tags={this.state.tags} add={this.add}/>
                                     </div>
                                 </Row>
 
@@ -233,6 +233,19 @@ class AddRecipe extends Component {
     }
 }
 
+function SearchButton({tags, add}){
+
+    if(tags.length > 0){
+        return(
+            <Button variant="primary" onClick={() => add()}>Add</Button>
+            
+        );
+    }
+    else{
+        return(<div></div>);
+    }
+}
+
 
 let IngredientList = connect(({ ingredients }) => ({ ingredients }))(({ ingredients }) => {
     if (ingredients.size == 0) {
@@ -249,4 +262,4 @@ function state2props(state) {
     return state;
 }
 
-export default connect(state2props)(AddRecipe);
+export default connect(state2props)(AddRecipes);
