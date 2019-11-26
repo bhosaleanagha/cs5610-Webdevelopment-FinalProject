@@ -96,7 +96,6 @@ if (session0) {
 function session(st0 = session0, action) {
     switch (action.type) {
         case 'LOG_IN':
-            //console.log("Session Log in:" + action.data);
             return action.data;
         case 'LOG_OUT':
             return null;
@@ -156,8 +155,6 @@ function ingredients(st0 = new Map(), action) {
 }
 
 function root_reducer(st0, action) {
-
-    console.log("root reducer", st0, action);
     let reducer = combineReducers({
         forms,
         users,
