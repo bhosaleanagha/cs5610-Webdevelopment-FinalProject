@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, NavLink, useLocation} from "react-router-dom";
+import { Redirect } from 'react-router-dom'
+
+import { BrowserRouter as Router, Switch, Route, Link, NavLink, useLocation} from "react-router-dom";
 import { Navbar, Nav, Col, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 
@@ -79,18 +81,28 @@ function ModalSwitch(props) {
 
     let location = useLocation();
     let background = location.state && location.state.background;
+
+    let LoginUserRoutes;
+
+    if (localStorage.length > 0) {
+      LoginUserRoutes = (
+        <div>
+          <Route exact path='/profile' component={Profile} />
+          <Route exact path='/add-recipes' component={AddRecipes} />
+          <Route exact path='/power-search' component={() => <PowerSearch channel={props.channel}/>} />
+          {/* <Route path='/my-recipes' component={UserRecipes} />  */}
+        </div>
+      )   
+    } 
   
     return (
       <div>
         <Switch location={background || location}>
           <Route exact path='/' component={() => <Home channel={props.channel}/>}/>
           <Route exact path='/about' component={Home}/>
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-          <Route path='/profile' component={Profile} />
-          <Route path='/add-recipes' component={AddRecipes} />
-          <Route path='/power-search' component={() => <PowerSearch channel={props.channel}/>} />
-          {/* <Route path='/my-recipes' component={UserRecipes} /> */}
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/register' component={Register} />
+          {LoginUserRoutes}
           <Route component={NotFound}/>
         </Switch>
         {background && <Route path="/login" component={Login} />}
@@ -102,8 +114,7 @@ function ModalSwitch(props) {
 let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
   let location = useLocation();
 
-  function logout(ev) {
-    ev.preventDefault();
+  function logout() {
     localStorage.removeItem('session');
     dispatch({
       type: 'LOG_OUT',
@@ -119,16 +130,13 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
           </NavLink>
         </Nav.Item>
         <Dropdown as={ButtonGroup}>
-          <Button variant="outline-light">{'Chef ' + session.user_fname + ' ' + session.user_lname}</Button>
-          <Dropdown.Toggle split variant="outline-light" id="dropdown-split-basic" />
+          <Dropdown.Toggle split variant="outline-light" id="dropdown-split-basic">{'Chef ' + session.user_fname + ' ' + session.user_lname}</Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item as={NavLink} to="/profile">Profile</Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/my-recipes">My Recipes</Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/add-recipes">Add Recipes</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={logout}>
-                Logout
-            </Dropdown.Item>
+              <Dropdown.Item as={Link} to="/" onClick={logout} >Logout </Dropdown.Item>            
           </Dropdown.Menu>
         </Dropdown>
       </Nav>
