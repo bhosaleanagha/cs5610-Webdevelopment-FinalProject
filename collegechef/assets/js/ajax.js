@@ -2,7 +2,11 @@ import store from './store';
 
 export function post(path, body) {
     let state = store.getState();
-    let token = state.session && state.session.token;
+    let token = "";
+
+    if (state.session) {
+        token = state.session.token
+    }
 
     return fetch('/ajax' + path, {
         method: 'post',
@@ -19,7 +23,11 @@ export function post(path, body) {
 
 export function get(path) {
     let state = store.getState();
-    let token = state.session && state.session.token;
+    let token = "";
+
+    if (state.session) {
+        token = state.session.token
+    }
 
     return fetch('/ajax' + path, {
         method: 'get',
@@ -98,8 +106,7 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
                         data: [resp.data],
                     });
                     form.redirect('/');
-                }
-                else {
+                } else {
                     store.dispatch({
                         type: 'ADD_RECIPE',
                         data: { errors: JSON.stringify(resp.errors) },
@@ -108,8 +115,7 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
             });
         });
         reader.readAsDataURL(data[0]);
-    }
-    else {
+    } else {
         post('/recipes', {
             recipe: {
                 user_id: user_id,
@@ -131,8 +137,7 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
                     data: [resp.data],
                 });
                 form.redirect('/');
-            }
-            else {
+            } else {
                 store.dispatch({
                     type: 'ADD_RECIPE',
                     data: { errors: JSON.stringify(resp.errors) },
@@ -166,8 +171,7 @@ export function add_ingredient(form) {
                 type: 'ADD_INGREDIENT',
                 data: [resp.data],
             });
-        }
-        else {
+        } else {
             store.dispatch({
                 type: 'CHANGE_NEW_TIMESHEET',
                 data: { errors: JSON.stringify(resp.errors) },

@@ -29,6 +29,15 @@ function home_search(st0 = { searchWords: [] }, action) {
     }
 }
 
+function power_search(st0 = { ingredients: "" }, action) {
+    switch (action.type) {
+        case 'CHANGE_POWER_SEARCH':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function feedback(st0 = { firstname: "", lastname: "", telnum: "", email: "", agree: false, contactType: 'Tel.', message: "", errors: null }, action) {
     switch (action.type) {
         case 'CHANGE_LOGIN':
@@ -69,6 +78,7 @@ function forms(st0, action) {
         login,
         register,
         home_search,
+        power_search,
         new_ingredient
     });
     return reducer(st0, action);
@@ -86,7 +96,6 @@ if (session0) {
 function session(st0 = session0, action) {
     switch (action.type) {
         case 'LOG_IN':
-            //console.log("Session Log in:" + action.data);
             return action.data;
         case 'LOG_OUT':
             return null;
@@ -98,6 +107,8 @@ function session(st0 = session0, action) {
 function recipes(st0 = {}, action) {
     switch (action.type) {
         case 'DBSEARCH_RESULTS':
+            return Object.assign({}, st0, action.data);
+        case 'APISEARCH_RESULTS':
             return Object.assign({}, st0, action.data);
         case 'CLEAR_RESULTS':
             let rec = st0;
@@ -161,8 +172,6 @@ function ingredients(st0 = new Map(), action) {
 }
 
 function root_reducer(st0, action) {
-
-    console.log("root reducer", st0, action);
     let reducer = combineReducers({
         forms,
         users,

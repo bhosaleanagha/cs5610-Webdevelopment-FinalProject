@@ -20,11 +20,10 @@ defmodule CollegechefWeb.Router do
     pipe_through :ajax
 
     resources "/users", UserController
-    resources "/recipes", RecipeController, except: [:new, :edit]
-    resources "/sessions", SessionController, only: [:create], singleton: true
+    resources "/recipes", RecipeController
     resources "/ingredients", IngredientController, except: [:new, :edit]
+    resources "/sessions", SessionController, only: [:create], singleton: true
     resources "/dbsearch", DBSearchController, only: [:create], singleton: true
-
   end
 
   pipeline :api do
@@ -36,7 +35,6 @@ defmodule CollegechefWeb.Router do
 
     get "/", PageController, :index
     get "/*path", PageController, :index
-
   end
 
   # Other scopes may use custom stacks.
