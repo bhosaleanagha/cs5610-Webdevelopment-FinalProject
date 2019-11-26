@@ -10,6 +10,6 @@ const NotFound = ({ location }) => (
   )
 
   function state2props(state) {
-    return state.forms.notfound;
+    return state
   }
   export default connect(state2props)(NotFound);
