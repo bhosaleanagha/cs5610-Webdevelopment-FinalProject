@@ -38,15 +38,6 @@ function power_search(st0 = { ingredients: "" }, action) {
     }
 }
 
-function feedback(st0 = { firstname: "", lastname: "", telnum: "", email: "", agree: false, contactType: 'Tel.', message: "", errors: null }, action) {
-    switch (action.type) {
-        case 'CHANGE_LOGIN':
-            return Object.assign({}, st0, action.data);
-        default:
-            return st0;
-    }
-}
-
 function addrecipes(st0 = { name: "", duration: 0, ingredients: "", cuisine: "", description: "", diet: "", dislikes: 0, likes: 0, data: null, user_id: "" }, action) {
     let session0 = localStorage.getItem('session');
     if (session0) {
@@ -69,11 +60,33 @@ function addrecipes(st0 = { name: "", duration: 0, ingredients: "", cuisine: "",
     }
 }
 
+function editrecipe(st0 = { name: "", duration: 0, ingredients: "", cuisine: "", description: "", diet: "", dislikes: 0, likes: 0, data: null, user_id: "" }, action) {
+    let session0 = localStorage.getItem('session');
+    if (session0) {
+        session0 = JSON.parse(session0);
+        st0 = Object.assign({}, st0, { user_id: session0.user_id });
+    }
+    let st1 = Object.values(st0);
+    let ingr = st1[2];
+    if (ingr) {
+        if (Array.isArray(ingr)) {
+            ingr = ingr.join(', ');
+            st0 = Object.assign({}, st0, { ingredients: ingr });
+        }
+    }
+    switch (action.type) {
+        case 'EDIT_RECIPE':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function forms(st0, action) {
     let reducer = combineReducers({
         ...createForms({
-            feedback: feedback,
-            addrecipes: addrecipes
+            addrecipes: addrecipes,
+            editrecipe: editrecipe,
         }),
         login,
         register,
@@ -129,16 +142,36 @@ function userrecipes(st0 = new Map(), action) {
     let st1 = new Map(st0);
     switch (action.type) {
         case 'GET_RECIPES':
-            for(let i=0; i< action.data.length; i++){
+            for (let i = 0; i < action.data.length; i++) {
                 st1.set(action.data[i]["id"], action.data[i]);
             }
             //st1 = Object.assign(st1, {}, {userrecipes: st2, newlyadded: true});
             return st1;
         case 'ADDED_RECIPE':
-            for(let i=0; i< action.data.length; i++){
+            for (let i = 0; i < action.data.length; i++) {
                 st1.set(action.data[i]["id"], action.data[i]);
             }
             return st1;
+/*         case 'CLEAR_INGR_RESULTS':
+            let rec = st0;
+            let res = Object.values(rec);
+            for (let i = 0; i < res.length; i++) {
+                let ingr = res[i]["ingredients"];
+                if (ingr.includes(action.data)) {
+                    delete res[i];
+                }
+            }
+            return res; */
+        case 'DELETE_RECIPE':
+            let res1 = Object.values(st1);
+            for (let i = 0; i < res1.length; i++) {
+                let resid = res1[i]["id"];
+                console.log(resid);
+                if (resid === action.data) {
+                    delete res1[i];
+                }
+            }
+            return res1;
         default:
             return st0;
     }
