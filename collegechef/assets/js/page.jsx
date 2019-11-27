@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useLocation} from "react-router-dom";
 import { Navbar, Nav, Col, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
-import { Redirect } from 'react-router';
 
 import store from './store';
 
@@ -86,29 +85,25 @@ function ModalSwitch(props) {
 
     let LoginUserRoutes;
 
-    if (localStorage.length > 0) {
-      LoginUserRoutes = (
-        <div>
-          <Route exact path='/profile' component={Profile} />
-          <Route exact path='/add-recipes' component={AddRecipes} />
-          <Route exact path='/power-search' component={() => <PowerSearch channel={props.channel}/>} />
-          {/* <Route path='/my-recipes' component={UserRecipes} />  */}
-        </div>
-      )   
-    } 
+      LoginUserRoutes = () => {
+        return(
+          <div>
+            <Route exact path='/profile' component={Profile} />
+            <Route exact path='/add-recipes' component={AddRecipes} />
+            <Route exact path='/power-search' component={() => <PowerSearch channel={props.channel}/>} />
+            <Route path='/my-recipes' component={UserRecipes} /> 
+          </div>
+        )
+      }
   
     return (
       <div>
         <Switch location={background || location}>
           <Route exact path='/' component={() => <Home channel={props.channel}/>}/>
           <Route exact path='/about' component={Home}/>
-          <Route path='/profile' component={Profile} />
-          <Route path='/add-recipes' component={AddRecipes} />
-          <Route path='/power-search' component={PowerSearch} />
-          <Route path='/my-recipes' component={UserRecipes} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
-          {LoginUserRoutes}
+          {localStorage.length > 0 ? <LoginUserRoutes /> : null}
           <Route component={NotFound}/>
         </Switch>
         {background && <Route path="/login" component={Login} />}
