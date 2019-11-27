@@ -29,7 +29,6 @@ class Home extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.check = this.check.bind(this);
-        //this.changed = this.changed.bind(this);
     }
 
     got_view(view) {
@@ -37,7 +36,6 @@ class Home extends React.Component {
             type: 'DBSEARCH_RESULTS',
             data: view.recipes.recipesRes,
         });
-        this.redirect(view.recipes.redirect);
     }
 
     handleDelete(i) {
@@ -54,21 +52,6 @@ class Home extends React.Component {
 
     handleAddition(tag) {
         this.setState(state => ({ tags: [...state.tags, tag] }));
-    }
-
-    /*
-    changed(data) {
-        this.props.dispatch({
-            type: 'CHANGE_WORDS',
-            data: data,
-        });
-    }
-    */
-
-    redirect(path) {
-        this.setState({
-            redirect: path,
-        });
     }
 
     check() {

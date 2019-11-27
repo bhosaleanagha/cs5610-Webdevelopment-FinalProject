@@ -25,10 +25,10 @@ import init_page from './page';
 
 window.addEventListener("load", () => {
     let root = document.getElementById('root');
-    let channel = socket.channel("recipes:"+"recipes", {});
+    let channel = socket.channel("recipes:" + "recipes", {});
     channel
-    .join()
-    .receive("ok", console.log("Joined"))
-    .receive("error", resp => { console.log("Unable to join", resp); });
+        .join()
+        .receive("ok", resp => { console.log("Joined", resp); })
+        .receive("error", resp => { console.log("Unable to join", resp); });
     init_page(root, channel);
 });
