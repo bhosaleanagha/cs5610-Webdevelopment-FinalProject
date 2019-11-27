@@ -4,8 +4,10 @@ import { Card, CardImg, CardImgOverlay, CardHeader, CardBody, CardTitle, Button,
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import image from '../../static/images/no-image-icon.jpg';
+import { Redirect } from 'react-router';
 
 import { get_recipes } from '../ajax';
+import { delete_recipe } from '../ajax';
 
 
 function state2props(state) {
@@ -50,7 +52,7 @@ let MyRecipes = connect(({ userrecipes }) => ({ userrecipes }))(({ userrecipes, 
   }
   else{
     return(
-      <div>No recipes added by you! Go ahead and add one.</div>
+      <div>Loading! Or no recipes added by you!</div>
     )
   }
 })
@@ -65,6 +67,7 @@ class RenderMenuItem extends React.Component {
     this.dish = props.dish;
     this.toggle = this.toggle.bind(this);
     //this.edit = this.edit.bind(this);
+    this.redirect = this.redirect.bind(this);
   }
 
   toggle = () => {
@@ -73,16 +76,23 @@ class RenderMenuItem extends React.Component {
 
   edit(e){
     let res = "recipes/" + this.dish.id;
-    this.setState({redirect: res });
+    this.redirect(res);
   }
 
   delete(e){
-    let res = "recipes/delete/" + this.dish.id;
-    this.setState({redirect: res });
+    delete_recipe(this.dish.id, this);
+  }
+
+  redirect(path) {
+    this.setState({
+      redirect: path,
+    });
   }
 
   render() {
-    console.log(this.state);
+    if(this.state.redirect != null){
+      return(<Redirect to={this.state.redirect} />);
+    }
     if (this.dish.data != null) {
       return (
         <Card key={this.dish.id} className="col-4">
@@ -107,7 +117,7 @@ class RenderMenuItem extends React.Component {
               </ul>
               <p><FontAwesomeIcon icon="heart" />{this.dish.likes} {' '} <FontAwesomeIcon icon="heart-broken" />{this.dish.dislikes}</p>
               <p>
-                <Button className="btn btn-warning" onClick={this.edit.bind(this)}>Edit</Button>
+                <Button className="btn btn-warning" onClick={this.edit.bind(this)}>Edit</Button> {'                     '}
                 <Button className="btn btn-danger" onClick={this.delete.bind(this)}>Delete</Button></p>
             </CardBody>
           </Collapse>
@@ -138,7 +148,7 @@ class RenderMenuItem extends React.Component {
               </ul>
               <p><FontAwesomeIcon icon="heart" />{this.dish.likes} {' '} <FontAwesomeIcon icon="heart-broken" />{this.dish.dislikes}</p>
               <p>
-                <Button className="btn btn-warning" onClick={this.edit.bind(this)}>Edit</Button>  {'            '}
+                <Button className="btn btn-warning" onClick={this.edit.bind(this)}>Edit</Button>  {'                     '}
                 <Button className="btn btn-danger" onClick={this.delete.bind(this)}>Delete</Button></p>
             </CardBody>
           </Collapse>
@@ -148,73 +158,4 @@ class RenderMenuItem extends React.Component {
   }
 }
 
-
-  /* function RenderMenuItem({ dish, dispatch }){
-    let [isOpen, setIsOpen] = useState(false);
-  
-    let toggle = () => setIsOpen(!isOpen);
-  
-    let edit = () => dispatchEdit(console.log("Edit"));
-  
-    if (dish.data != null) {
-      return (
-        <Card key={dish.id} className="col-4">
-          <CardHeader>
-            <CardImg width="100%" src={dish.data} alt={dish.name} />
-            <CardImgOverlay className="ml-5">
-              <CardTitle id={dish.id}>
-                {dish.name}
-              </CardTitle>
-            </CardImgOverlay>
-            <Button className="btn btn-warning" md={{offset:2}} onClick={toggle}>Details</Button>
-          </CardHeader>
-  
-          <Collapse isOpen={isOpen}>
-            <CardBody id={dish.id}>
-              <ul>
-                <li>Cuisine: {dish.cuisine}</li>
-                <li>Duration: {dish.duration}</li>
-                <li>Igredients: {dish.ingredients}</li>
-                <li>Diet: {dish.diet}</li>
-                <li>Procedure:
-                  <p className="d-none d-sm-block">{dish.description}</p>
-                </li>
-              </ul>
-              <FontAwesomeIcon icon="heart" />{dish.likes} {' '} <FontAwesomeIcon icon="heart-broken" />{dish.dislikes}
-              <Button className="btn btn-warning" onClick={edit}>Edit</Button>
-            </CardBody>
-          </Collapse>
-        </Card>
-      );
-    }
-    else {
-      return (
-        <Card key={dish.id} className="col-4">
-          <CardHeader>
-              <CardTitle id={dish.id}>
-                {dish.name}
-              </CardTitle>
-            <Button className="btn btn-warning" md={{offset:2}} onClick={toggle}>Details</Button>
-          </CardHeader>
-          <Collapse isOpen={isOpen}>
-            <CardBody>
-              <ul>
-                <li>Cuisine: {dish.cuisine}</li>
-                <li>Duration: {dish.duration}</li>
-                <li>Igredients: {dish.ingredients}</li>
-                <li>Diet: {dish.diet}</li>
-                <li>Procedure:
-                  <p className="d-none d-sm-block">{dish.description}</p>
-                </li>
-  
-              </ul>
-              <FontAwesomeIcon icon="heart" />{dish.likes} {' '} <FontAwesomeIcon icon="heart-broken" />{dish.dislikes}
-              <Button className="btn btn-warning" onClick={edit}>Edit</Button>
-            </CardBody>
-          </Collapse>
-        </Card>
-      );
-    }
-  }
-   */
-  export default connect(state2props)(UserRecipes);
+export default connect(state2props)(UserRecipes);

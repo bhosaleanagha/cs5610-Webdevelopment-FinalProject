@@ -21,6 +21,47 @@ export function post(path, body) {
     }).then((resp) => resp.json());
 }
 
+export function put(path, body) {
+    let state = store.getState();
+    let token = "";
+
+    if (state.session) {
+        token = state.session.token
+    }
+
+    return fetch('/ajax' + path, {
+        method: 'put',
+        credentials: 'same-origin',
+        headers: new Headers({
+            'x-csrf-token': window.csrf_token,
+            'content-type': "application/json; charset=UTF-8",
+            'accept': 'application/json',
+            'x-auth': token || "",
+        }),
+        body: JSON.stringify(body),
+    }).then((resp) => resp.json());
+}
+
+export function deleteC(path, id) {
+    let state = store.getState();
+    let token = "";
+
+    if (state.session) {
+        token = state.session.token
+    }
+
+    return fetch('/ajax' + path, {
+        method: 'delete',
+        credentials: 'same-origin',
+        headers: new Headers({
+            'x-csrf-token': window.csrf_token,
+            'content-type': "application/json; charset=UTF-8",
+            'accept': 'application/json',
+            'x-auth': token || "",
+        }),
+    });
+}
+
 export function get(path) {
     let state = store.getState();
     let token = "";
@@ -147,6 +188,89 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
     }
 }
 
+
+export function edit_recipe_with_picture(id, cuisine, description, diet, duration, data, ingredients, form) {
+    let session0 = localStorage.getItem('session');
+    let user_id = "";
+    if (session0) {
+        session0 = JSON.parse(session0);
+        user_id = session0.user_id;
+    }
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+        put('/recipes/' + id, {
+            id: id,
+            recipe: {
+                cuisine: cuisine,
+                duration: duration,
+                ingredients: ingredients,
+                diet: diet,
+                description: description,
+                data: reader.result,
+            }
+        }).then((resp) => {
+            if (resp.data) {
+                store.dispatch({
+                    type: 'ADDED_RECIPE',
+                    data: [resp.data],
+                });
+                form.redirect('/my-recipes');
+            } else {
+                store.dispatch({
+                    type: 'ADD_RECIPE',
+                    data: { errors: JSON.stringify(resp.errors) },
+                });
+            }
+        });
+    });
+    reader.readAsDataURL(data[0]);
+}
+
+export function delete_recipe(id, form) {
+    deleteC('/recipes/' + id, id).then(() => {
+        //get_recipes();
+        store.dispatch({
+            type: 'DELETE_RECIPE',
+            data: id
+        });
+        form.redirect('/');
+    });
+}
+
+export function edit_recipe_without_picture(id, cuisine, description, diet, duration, ingredients, form) {
+    let session0 = localStorage.getItem('session');
+    let user_id = "";
+    if (session0) {
+        session0 = JSON.parse(session0);
+        user_id = session0.user_id;
+    }
+    put('/recipes/' + id, {
+        id: id,
+        recipe: {
+            cuisine: cuisine,
+            duration: duration,
+            ingredients: ingredients,
+            diet: diet,
+            description: description,
+        }
+    }).then((resp) => {
+        if (resp.data) {
+            store.dispatch({
+                type: 'ADDED_RECIPE',
+                data: [resp.data],
+            });
+            form.redirect('/my-recipes');
+        } else {
+            store.dispatch({
+                type: 'ADD_RECIPE',
+                data: { errors: JSON.stringify(resp.errors) },
+            });
+        }
+    });
+}
+
+
+
 export function get_ingredients() {
     get('/ingredients')
         .then((resp) => {
@@ -178,6 +302,16 @@ export function add_ingredient(form) {
             });
         }
     });
+}
+
+export function get_recipe(id) {
+    get('/recipes/' + id)
+        .then((resp) => {
+            store.dispatch({
+                type: 'ADDED_RECIPE',
+                data: [resp.data],
+            });
+        });
 }
 
 export function submit_login(form) {

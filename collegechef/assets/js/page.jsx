@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useLocation} from "react-router-dom";
 import { Navbar, Nav, Col, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
-import { Redirect } from 'react-router';
+
 
 import store from './store';
 
@@ -18,6 +18,8 @@ import PowerSearch from './components/power_search';
 import AddRecipes from './components/addRecipes';
 import UserRecipes from './components/my_recipes';
 import NotFound from './components/notfound';
+import EditRecipe from './components/edit_recipe';
+import Footer from './components/footer';
 
 
 // import Register from './pages/register';
@@ -54,7 +56,7 @@ class Page extends React.Component {
   render() {
     return(
       <Router>
-       <Navbar bg="dark" variant="dark" expand="md">
+       <Navbar className="customNav" expand="md">
           <Col md="8">
             <Nav>
               <Nav.Item>
@@ -74,6 +76,7 @@ class Page extends React.Component {
           </Col>
        </Navbar>
        <ModalSwitch channel={this.channel}/>
+       <Footer />
       </Router>
     )
   }
@@ -88,12 +91,16 @@ function ModalSwitch(props) {
 
     if (localStorage.length > 0) {
       LoginUserRoutes = (
-        <div>
+        <React.Fragment>
           <Route exact path='/profile' component={Profile} />
           <Route exact path='/add-recipes' component={AddRecipes} />
           <Route exact path='/power-search' component={() => <PowerSearch channel={props.channel}/>} />
-          {/* <Route path='/my-recipes' component={UserRecipes} />  */}
-        </div>
+          <Route exact path="/recipes/:id" render={
+          (props) =>
+            <EditRecipe id={props.match.params.id} />
+        } />
+          <Route path='/my-recipes' component={UserRecipes} /> 
+          </React.Fragment>
       )   
     } 
   
