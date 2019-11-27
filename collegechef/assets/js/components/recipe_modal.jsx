@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Card, CardImg, CardTitle, CardText, CardDeck,CardSubtitle, CardBody, Col} from 'reactstrap';
 import { Button, Container, Modal, ModalHeader, ModalTitle,ModalBody,ModalFooter} from 'react-bootstrap';
 
 import _ from 'lodash';

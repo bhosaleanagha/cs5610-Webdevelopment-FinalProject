@@ -88,11 +88,9 @@ const RenderMenuItem = ({ dish }) => {
             <Card key={dish.id}>
                 <CardHeader>
                     <CardImg width="100%" src={dish.data} alt={dish.name} />
-                    <CardImgOverlay className="ml-5">
                         <CardTitle id={dish.id}>
                             {dish.name}
                         </CardTitle>
-                    </CardImgOverlay>
                     <Button onClick={toggle}>Details</Button>
                 </CardHeader>
 
@@ -119,12 +117,10 @@ const RenderMenuItem = ({ dish }) => {
             <Card key={dish.id}>
                 <CardHeader>
                 <CardImg width="100%" src={image} alt={dish.name} />
-                    <CardImgOverlay className="ml-5">
                         <CardTitle id={dish.id}>
                             {dish.name}
                         </CardTitle>
-                    </CardImgOverlay>
-                    <Button onClick={toggle}>Details</Button>
+                    <Button className="btn btn-success" onClick={toggle}>Details</Button>
                 </CardHeader>
                 <Collapse isOpen={isOpen}>
                     <CardBody>

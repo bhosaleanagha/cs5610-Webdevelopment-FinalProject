@@ -201,7 +201,7 @@ class EditRecipe extends Component {
                       placeholder="Duration to cook"
                       className="form-control"
                       validators={{
-                        minLength: minLength(1), maxLength: maxLength(5), isNumber
+                         maxLength: maxLength(5), isNumber
                       }}
                     />
                     <Errors
@@ -209,7 +209,6 @@ class EditRecipe extends Component {
                       model=".duration"
                       show="touched"
                       messages={{
-                        minLength: 'Must be at least 1 min',
                         maxLength: 'Can be at most 5 digits',
                         isNumber: 'Must be a number'
                       }}

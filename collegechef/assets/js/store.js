@@ -145,28 +145,16 @@ function userrecipes(st0 = new Map(), action) {
             for (let i = 0; i < action.data.length; i++) {
                 st1.set(action.data[i]["id"], action.data[i]);
             }
-            //st1 = Object.assign(st1, {}, {userrecipes: st2, newlyadded: true});
             return st1;
         case 'ADDED_RECIPE':
             for (let i = 0; i < action.data.length; i++) {
                 st1.set(action.data[i]["id"], action.data[i]);
             }
             return st1;
-/*         case 'CLEAR_INGR_RESULTS':
-            let rec = st0;
-            let res = Object.values(rec);
-            for (let i = 0; i < res.length; i++) {
-                let ingr = res[i]["ingredients"];
-                if (ingr.includes(action.data)) {
-                    delete res[i];
-                }
-            }
-            return res; */
         case 'DELETE_RECIPE':
             let res1 = Object.values(st1);
             for (let i = 0; i < res1.length; i++) {
                 let resid = res1[i]["id"];
-                console.log(resid);
                 if (resid === action.data) {
                     delete res1[i];
                 }

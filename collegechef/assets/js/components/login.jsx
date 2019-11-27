@@ -42,7 +42,7 @@ class Login extends React.Component {
         this.setState({
           isModalOpen: !this.state.isModalOpen
         }); 
-        var path = "/";
+        var path = this.props.location.state.background.pathname;
         this.redirect(path);
       }
 

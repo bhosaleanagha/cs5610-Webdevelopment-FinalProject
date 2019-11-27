@@ -1,13 +1,13 @@
 /* This file is for your main application css. */
 
 @import "~bootstrap/scss/bootstrap";
-
-#root{
-  min-height: 100vh; /* will cover the 100% of viewport */
-  overflow: hidden;
-  display: block;
-  position: relative;
-  padding-bottom: 100px;
+#root {
+    min-height: 100vh;
+    /* will cover the 100% of viewport */
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 100px;
 }
 
 .row-header {
@@ -19,28 +19,25 @@
     margin: 0px auto;
     padding: 50px 0px;
     border-bottom: 1px ridge;
-        min-height: 400px; }
-  
-  .footer {
-    position: absolute; 
-    bottom: 0;
-    height: 10rem;
-    min-height: 200px;
-    background-color: #0353A4;
-    width: 100%;
-    margin: 0px auto;
-    padding: 20px 0px;
+    min-height: 400px;
 }
 
+.header {
+    background-color: #F6D8AE;
+}
+
+.footer {
+    position: relative;
+    bottom: 0;
+    background-color: #9575cd;
+    width: 100%;
+    // margin: 0px auto;
+    // padding: 20px 0px;
+}
 
 .jumbo {
     background-image: url('../static/images/background_image.jpeg');
     background-repeat: no-repeat;
-}
-
-.customNav {
-    background-color: #0353A4;
-    color: floralwhite;
 }
 
 .address {

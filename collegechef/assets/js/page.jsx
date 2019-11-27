@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom'
 
 import { BrowserRouter as Router, Switch, Route, Link, NavLink, useLocation} from "react-router-dom";
-import { Navbar, Nav, Col, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Col, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 import store from './store';
 
@@ -11,19 +11,13 @@ import Home from './components/home';
 import Profile from './components/profile';
 import Register from './components/register'
 import Login from './components/login';
-// import UserRecipes from './components/my_recipes';
 import PowerSearch from './components/power_search';
+import About from './components/about';
 import AddRecipes from './components/addRecipes';
 import UserRecipes from './components/my_recipes';
 import NotFound from './components/notfound';
 import EditRecipe from './components/edit_recipe';
 import Footer from './components/footer';
-
-
-// import Register from './pages/register';
-// import Login from './pages/login';
-// import SearchResults from './pages/searchResults';
-// import Search from './pages/search';
 
 export default function init_page(root, channel) {
   let tree = (
@@ -53,29 +47,31 @@ class Page extends React.Component {
   
   render() {
     return(
-      <Router>
-       <Navbar className="customNav" expand="md">
-          <Col md="8">
-            <Nav>
-              <Nav.Item>
-                <NavLink to="/" exact activeClassName="active" className="nav-link">
-                  Home
-                </NavLink>
-              </Nav.Item>
-              <Nav.Item>
-                <NavLink to="/about" exact activeClassName="active" className="nav-link">
-                  About
-                </NavLink>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col md="4">
-            <Session/>
-          </Col>
-       </Navbar>
-       <ModalSwitch channel={this.channel}/>
-       <Footer />
-      </Router>
+      <div>
+        <Router>
+          <Navbar className="header" expand="md">
+              <Col md="8">
+                <Nav>
+                  <Nav.Item>
+                    <NavLink to="/" exact activeClassName="active" className="nav-link">
+                      Home
+                    </NavLink>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <NavLink to="/about" exact activeClassName="active" className="nav-link">
+                      About
+                    </NavLink>
+                  </Nav.Item>
+                </Nav>
+              </Col>
+              <Col md="4">
+                <Session/>
+              </Col>
+          </Navbar>
+          <ModalSwitch channel={this.channel}/>
+        </Router>
+        <Footer />
+      </div>
     )
   }
 }
@@ -87,13 +83,13 @@ function ModalSwitch(props) {
 
     let LoginUserRoutes = () => {
         return (
-          <div>
+          <React.Fragment>
             <Route exact path='/profile' component={Profile} />
             <Route exact path='/add-recipes' component={AddRecipes} />
             <Route exact path='/power-search' component={() => <PowerSearch channel={props.channel}/>} />
             <Route exact path="/recipes/:id" render={(props) => <EditRecipe id={props.match.params.id}/>} />
             <Route exact path='/my-recipes' component={UserRecipes} /> 
-          </div>
+          </React.Fragment>
         )  
       } 
     
@@ -102,7 +98,7 @@ function ModalSwitch(props) {
       <div>
         <Switch location={background || location}>
           <Route exact path='/' component={() => <Home channel={props.channel}/>}/>
-          <Route exact path='/about' component={Home}/>
+          <Route exact path='/about' component={About}/>
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
           {localStorage.length > 0 ? <LoginUserRoutes /> : null}
@@ -135,7 +131,7 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
           </NavLink>
         </Nav.Item>
         <Dropdown as={ButtonGroup}>
-          <Dropdown.Toggle split variant="outline-light" id="dropdown-split-basic">{'Chef ' + session.user_fname + ' ' + session.user_lname}</Dropdown.Toggle>
+          <Dropdown.Toggle split variant="outline-dark" id="dropdown-split-basic">{'Chef ' + session.user_fname + ' ' + session.user_lname}</Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item as={NavLink} to="/profile">Profile</Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/my-recipes">My Recipes</Dropdown.Item>
