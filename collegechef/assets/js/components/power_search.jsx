@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import {Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle } from 'reactstrap';
-import { Container } from 'reactstrap';
-import { Button} from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Card, CardImg, CardTitle, CardText, CardDeck,CardSubtitle, CardBody, Col} from 'reactstrap';
+import { Button, Container, Modal, ModalHeader, ModalTitle,ModalBody,ModalFooter} from 'react-bootstrap';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 
 import { connect } from 'react-redux';
+
+import RecipeModal from './recipe_modal';
 import _ from 'lodash';
-import Results from './recipesResult';
 
 class PowerSearch extends React.Component {
     constructor(props){
         super(props);
         this.channel = this.props.channel;
         this.state = {
-          ingredients: ""
+          ingredients: "",
+          recipesResult: {}
         }
         this.submit_powersearch = this.submit_powersearch.bind(this);
     }
@@ -25,6 +26,9 @@ class PowerSearch extends React.Component {
             data: view.recipes.recipesRes,
         });
         this.redirect(view.recipes.redirect);
+        this.setState({
+          recipesResult: view.recipes
+        })
     }
 
     redirect(path) {
@@ -34,7 +38,7 @@ class PowerSearch extends React.Component {
     }
 
     setIngredients(ev){
-      this.setState({ingredients: ev})
+      this.setState({ingredients: ev.replace(/\s/g, "")})
     }
 
     submit_powersearch() {
@@ -63,40 +67,37 @@ class PowerSearch extends React.Component {
                     <div className="recipes_cards">
                     </div>
                 </Container>
-                <DisplayRecipeCard root={this.props}/>
+                <DisplayRecipeCard recipeResult={this.state.recipesResult} root={this.props}/>
           </div>
         )
     }
 }
 
 
-const DisplayRecipeCard = ({root}) => {
+const DisplayRecipeCard = ({root,recipeResult}) => {
   let recipes = root.recipes;
-  
-  let allRecipes = Object.values(recipes).map((recipe) => {
+
+  let recipesCards = Object.values(recipes).map((recipe,index) => {
     return (
-        <Card key={recipe.id}>
-          <CardImg top width="50%" height="50%" src={recipe.image} alt="Card image cap" />
+      <Col key={index} sm="3">
+        <Card>
+          <CardImg top width="256px" height="186px" src={recipe.image} alt="Card image cap" />
           <CardBody>
             <CardTitle>{recipe.name}</CardTitle> 
-            <CardText>{recipe.ingredients[0].originalString}</CardText>
-            <Button>Button</Button>
+            <RecipeModal recipeInfo={recipe} />
           </CardBody>
         </Card>
+      </Col>
     )
   });
-  
-  if (Object.keys(recipes).length > 0){
+
     return (
-      <div>
-          {allRecipes}
-      </div>
+      <Container>
+        <CardDeck>
+            {recipesCards}
+        </CardDeck>
+      </Container>
     )
-  } else {
-    return (
-      <div></div>
-   );
-  }
 };
 
 function state2props(state) {
