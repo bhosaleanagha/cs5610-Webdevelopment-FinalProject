@@ -32,8 +32,7 @@ defmodule Collegechef.GetRecipes do
         url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=10&ranking=1&ignorePantry=false&ingredients=#{ingredient}"
         resp = HTTPoison.get!(url, headers)
         data = Jason.decode!(resp.body)
-        Enum.shuffle(data)
-        Enum.shuffle(data)
+        data = Enum.shuffle(data)
         data
       end
 

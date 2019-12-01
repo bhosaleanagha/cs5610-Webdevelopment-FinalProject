@@ -20,7 +20,7 @@ function RecipeModal(recipeInfo) {
             <Modal.Title>{recipeInfo.recipeInfo.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {recipeInfo.recipeInfo.ingredients[0].originalString ? recipeInfo.recipeInfo.ingredients[0].originalString : null}
+            {recipeInfo.recipeInfo.ingredients[0] ? recipeInfo.recipeInfo.ingredients[0].originalString : null}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
