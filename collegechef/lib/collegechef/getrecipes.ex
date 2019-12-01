@@ -24,8 +24,7 @@ defmodule Collegechef.GetRecipes do
     end
 
     def api_key do
-      #  System.get_env("APP_API_KEY") || Application.get_env(:collegechef, :api_key)
-      result = "b4c77881e7mshf8367356922dcd6p13c5f6jsn063f0bd528c6"
+       System.get_env("APP_API_KEY") || Application.get_env(:collegechef, :api_key)
     end
 
     def recipe_list(ingredient) do
