@@ -29,7 +29,7 @@ defmodule Collegechef.GetRecipes do
 
     def recipe_list(ingredient) do
         headers = [{:"x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"}, {:"x-rapidapi-key", api_key()}]
-        url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=10&ranking=1&ignorePantry=false&ingredients=#{ingredient}"
+        url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=8&ranking=1&ignorePantry=false&ingredients=#{ingredient}"
         resp = HTTPoison.get!(url, headers)
         data = Jason.decode!(resp.body)
         data = Enum.shuffle(data)
