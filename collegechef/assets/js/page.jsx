@@ -47,9 +47,8 @@ class Page extends React.Component {
   
   render() {
     return(
-      <div>
         <Router>
-          <Navbar className="header" expand="md">
+          <Navbar bg="dark" variant="dark" className="header" expand="md">
               <Col md="8">
                 <Nav>
                   <Nav.Item>
@@ -69,15 +68,13 @@ class Page extends React.Component {
               </Col>
           </Navbar>
           <ModalSwitch channel={this.channel}/>
+                  {/* <Footer /> */}
         </Router>
-        <Footer />
-      </div>
     )
   }
 }
 
 function ModalSwitch(props) {
-
     let location = useLocation();
     let background = location.state && location.state.background;
 
@@ -131,7 +128,7 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
           </NavLink>
         </Nav.Item>
         <Dropdown as={ButtonGroup}>
-          <Dropdown.Toggle split variant="outline-dark" id="dropdown-split-basic">{'Chef ' + session.user_fname + ' ' + session.user_lname}</Dropdown.Toggle>
+          <Dropdown.Toggle split variant="outline-light" id="dropdown-split-basic">{session.user_fname + ' ' + session.user_lname}</Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item as={NavLink} to="/profile">Profile</Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/my-recipes">My Recipes</Dropdown.Item>

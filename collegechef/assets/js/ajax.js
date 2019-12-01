@@ -109,6 +109,36 @@ export function submit_register(form) {
     })
 }
 
+export function submit_password_change(form) {
+    let session0 = localStorage.getItem('session');
+    let state = store.getState();
+    let data = state.forms.change_password;
+    let user_id = "";
+    if (session0) {
+        session0 = JSON.parse(session0);
+        user_id = session0.user_id;
+    }
+
+    put('/users/' + user_id, {
+        user: {
+            password: data.password,
+        }
+    }).then((resp) => {
+        if (resp.data) {
+            store.dispatch({
+                type: 'CHANGE_PASSWORD',
+                data: [resp.data],
+            });
+            form.redirect('/');
+        } else {
+            store.dispatch({
+                type: 'CHANGE_PASSWORD',
+                data: { errors: JSON.stringify(resp.errors) },
+            });
+        }
+    });
+}
+
 export function add_recipe(cuisine, description, diet, duration, name, data, ingredients, form) {
     let session0 = localStorage.getItem('session');
     let user_id = "";

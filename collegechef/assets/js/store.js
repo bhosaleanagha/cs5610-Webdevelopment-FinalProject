@@ -20,6 +20,15 @@ function register(st0 = { first_name: "", last_name: "", email: "", password: ""
     }
 }
 
+function change_password(st0 = { password: "" }, action) {
+    switch (action.type) {
+        case 'CHANGE_PASSWORD':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function home_search(st0 = { searchWords: [] }, action) {
     switch (action.type) {
         case 'CHANGE_WORDS':
@@ -92,7 +101,8 @@ function forms(st0, action) {
         register,
         home_search,
         power_search,
-        new_ingredient
+        new_ingredient,
+        change_password
     });
     return reducer(st0, action);
 }

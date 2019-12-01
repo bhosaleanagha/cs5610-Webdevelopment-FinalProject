@@ -1,71 +1,120 @@
 import React from 'react';
-import { Button, Container} from 'react-bootstrap';
-import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
+import { Jumbotron, Container, Modal, ModalHeader,
+     ModalBody, Button, FormGroup, Form, Label, Input  } from 'reactstrap';
 
-import { Redirect } from 'react-router';
-import { WithContext as ReactTags } from 'react-tag-input';
-
-class Profile extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            redirect: 'profile',
-            tags: [],
-            suggestions: [],
-        }
+import { submit_password_change } from '../ajax';
 
 
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleAddition = this.handleAddition.bind(this);
-        this.check = this.check.bind(this);
-        //this.changed = this.changed.bind(this);
-    }
+let Profile = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
 
-    handleDelete(i) {
-        const { tags } = this.state;
-        this.setState({
-            tags: tags.filter((tag, index) => index !== i),
-        });
-    }
-
-    handleAddition(tag) {
-        this.setState(state => ({ tags: [...state.tags, tag] }));
-    }
-
-    changed(data) {
-        this.props.dispatch({
-            type: 'CHANGE_WORDS',
+    function changed(data) {
+        dispatch({
+            type: 'CHANGE_PASSWORD',
             data: data,
         });
     }
 
-    redirect(path) {
-        this.setState({
-            redirect: path,
-        });
-    }
+    return (
+        <div>
+            <Jumbotron fluid>
+                <Container>
+                    <p>{session.user_email}</p>
+                     <Form>
+                        <FormGroup>
+                            <Label htmlFor="password">Password</Label>
+                            <Input type="password" id="password" name="password" onChange={
+                                    (ev) => changed({password: ev.target.value})}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label htmlFor="confirmed_password">Comfirmed Password</Label>
+                            <Input type="password" id="confirmed_password" name="confirmed_password"/>
+                        </FormGroup>
+                        
+                        <Button color="primary" onClick={()=> submit_password_change(this)}>Change</Button>
+                    </Form>
+                </Container>
+            </Jumbotron>
+            <h1>Bookmarked</h1>
+        </div>
+    );
+})     
 
-    check() {
-        let keyword = this.state.tags;
-        let keywords = [];
-        for (let i = 0; i < keyword.length; i++) {
-            keywords.push(keyword[i]["id"]);
-        }
-        this.changed({searchWords: keywords});
-        get_recipes(this);
-    }
+// class Profile extends React.Component {
+//     constructor(props) {
+//         super(props);
 
-    render() {
-        return (
-            <h1>Profile</h1>
-        )
+//         this.state = {
+//             isModalOpen: false,
+//             redirect: null,
+//           }
 
-    }
-}
+//         this.toggleModal = this.toggleModal.bind(this);
+//     }
 
-function state2props(state) {
-    // return state.forms.home_search;
-}
 
-export default connect(state2props)(Profile);
+//     changed(data) {
+//         this.props.dispatch({
+//             type: 'CHANGE_PASSWORD',
+//             data: data,
+//         });
+//     }
+
+//     toggleModal() {
+//         this.setState({
+//           isModalOpen: !this.state.isModalOpen
+//         }); 
+//         var path = this.props.location.state.background.pathname;
+//         this.redirect(path);
+//       }
+
+
+//     redirect(path) {
+//         this.setState({
+//             redirect: path,
+//         });
+//     }
+
+
+//     render() {
+//         let {password} = this.props;
+
+//         return (
+            // <div>
+            //     <Jumbotron fluid>
+            //         <Container>
+            //             <p>johndoe@gmail.com</p>
+            //             <Modal isOpen={this.state.isModalOpen} fade={false} toggle={this.toggleModal}>
+            //             <ModalHeader toggle={this.toggleModal}>Change Password</ModalHeader>
+            //             <ModalBody>
+            //             <Form>
+            //                 <FormGroup>
+            //                     <Label htmlFor="password">Password</Label>
+            //                     <Input type="password" id="password" name="password" onChange={
+            //                             (ev) => this.changed({password: ev.target.value})}/>
+            //                 </FormGroup>
+            //                 <FormGroup>
+            //                     <Label htmlFor="confirmed_password">Comfirmed Password</Label>
+            //                     <Input type="password" id="confirmed_password" name="confirmed_password"/>
+            //                 </FormGroup>
+                            
+            //                 <Button color="primary" onClick={()=> submit_password_change(this)}>Change</Button>
+            //             </Form>
+            //         </ModalBody>
+            //         </Modal>
+            //         </Container>
+            //     </Jumbotron>
+            //     <h1>Bookmarked</h1>
+            // </div>
+
+//         )
+
+//     }
+// }
+
+// function state2props(state) {
+//     return state.forms;
+// }
+
+// export default connect(state2props)(Profile);
+export default Profile;

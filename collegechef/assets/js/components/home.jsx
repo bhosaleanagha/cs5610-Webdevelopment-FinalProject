@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
-import { Jumbotron } from 'reactstrap';
+import { Button } from 'react-bootstrap';
+import { Jumbotron, Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardImgOverlay, CardImg, CardBody, CardTitle, Collapse, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -67,7 +67,6 @@ class Home extends React.Component {
     render() {
         const { tags } = this.state;
         return (
-            <div>
                 <Jumbotron className="jumbo" >
                     <Container >
                         <div className="row row-header">
@@ -90,10 +89,9 @@ class Home extends React.Component {
                                 <Button variant="info" onClick={() => this.check()}><FontAwesomeIcon icon="search"/> Search For Recipes</Button>
                             </div>
                         </div>
+                        <Recipes root={this.props} />
                     </Container>
                 </Jumbotron>
-                <Recipes root={this.props} />
-            </div>
         )
 
     }
