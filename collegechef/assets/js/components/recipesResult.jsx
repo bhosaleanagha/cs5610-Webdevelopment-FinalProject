@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Pagination, PaginationItem, PaginationLink, Card, CardHeader, CardImgOverlay, CardImg, CardBody, CardTitle, Row, Collapse, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import image from '../../static/images/no-image-icon.jpg';
+import ReactCardFlip from 'react-card-flip';
+
 
 class Results extends React.Component {
 
@@ -80,66 +82,86 @@ class Results extends React.Component {
 }
 
 const RenderMenuItem = ({ dish }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isFlipped, setIsOpen] = useState(false);
 
-    const toggle = () => setIsOpen(!isOpen);
+  
+    const handleClick = (ev) => {
+        ev.preventDefault();
+        setIsOpen(!isFlipped);
+    }
+
     if (dish.data != null) {
         return (
             <Card key={dish.id}>
-                <CardHeader>
-                    <CardImg width="100%" src={dish.data} alt={dish.name} />
-                        <CardTitle id={dish.id}>
-                            {dish.name}
-                        </CardTitle>
-                    <Button onClick={toggle}>Details</Button>
-                </CardHeader>
-
-                <Collapse isOpen={isOpen}>
-                    <CardBody id={dish.id}>
-                        <ul>
-                            <li>Cuisine: {dish.cuisine}</li>
-                            <li>Duration: {dish.duration}</li>
-                            <li>Igredients: {dish.ingredients}</li>
-                            <li>Diet: {dish.diet}</li>
-                            <li>Contributed By: {dish.user}</li>
-                            <li>Procedure:
-                                <p className="d-none d-sm-block">{dish.description}</p>
-                            </li>
-                        </ul>
-                        <FontAwesomeIcon icon="heart"/>{dish.like} {' '} <FontAwesomeIcon icon="heart-broken"/>{dish.dislikes}
-                    </CardBody>
-                </Collapse>
+                <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+                    <div key="front">
+                        <CardHeader>
+                            <CardImg top width="256px" height="186px" src={dish.data} alt={dish.name} />
+                                <CardTitle id={dish.id}>
+                                    {dish.name}
+                                </CardTitle>
+                            <Button onClick={handleClick}>Details</Button>
+                        </CardHeader>
+                    </div>
+                    <div key="back">
+                        <CardBody id={dish.id}>
+                            <ul>
+                                <li>Cuisine: {dish.cuisine}</li>
+                                <li>Duration: {dish.duration}</li>
+                                <li>Igredients: {dish.ingredients}</li>
+                                <li>Diet: {dish.diet}</li>
+                                <li>Contributed By: {dish.user}</li>
+                                <li>Procedure:
+                                    <p className="d-none d-sm-block">{dish.description}</p>
+                                </li>
+                            </ul>
+                            <div className="ratings">
+                                <FontAwesomeIcon icon="heart">{dish.like}</FontAwesomeIcon>
+                                <FontAwesomeIcon icon="heart-broken">{dish.dislikes}</FontAwesomeIcon>
+                            </div>
+                            
+                            <Button className="btn btn-info" onClick={handleClick}>Photo</Button>
+                        </CardBody>
+                    </div>
+                </ReactCardFlip>
             </Card>
         );
-    }
-    else {
+    } else {
         return (
             <Card key={dish.id}>
-                <CardHeader>
-                <CardImg width="100%" src={image} alt={dish.name} />
-                        <CardTitle id={dish.id}>
-                            {dish.name}
-                        </CardTitle>
-                    <Button className="btn btn-success" onClick={toggle}>Details</Button>
-                </CardHeader>
-                <Collapse isOpen={isOpen}>
-                    <CardBody>
-                        <ul>
-                            <li>Cuisine: {dish.cuisine}</li>
-                            <li>Duration: {dish.duration}</li>
-                            <li>Igredients: {dish.ingredients}</li>
-                            <li>Diet: {dish.diet}</li>
-                            <li>Contributed By: {dish.user}</li>
-                            
-                            <li>Dislikes: {dish.dislikes}</li>
-                            <li>Procedure:
-                        <p className="d-none d-sm-block">{dish.description}</p>
-                            </li>
-                            
-                        </ul>
-                        <FontAwesomeIcon icon="heart"/>{dish.like} {' '} <FontAwesomeIcon icon="heart-broken"/>{dish.dislikes}
-                    </CardBody>
-                </Collapse>
+                <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+                    <div key="front">
+                        <CardHeader>
+                            <CardImg top width="150" height="250" src={image} alt={dish.name} />
+                                <CardTitle id={dish.id}>
+                                    {dish.name}
+                                </CardTitle>
+                            <Button className="btn btn-info" onClick={handleClick}>Details</Button>
+                        </CardHeader>
+                    </div>
+                    <div key="back">
+                        <CardBody>
+                            <ul>
+                                <li>Cuisine: {dish.cuisine}</li>
+                                <li>Duration: {dish.duration}</li>
+                                <li>Igredients: {dish.ingredients}</li>
+                                <li>Diet: {dish.diet}</li>
+                                <li>Contributed By: {dish.user}</li>
+                                
+                                <li>Dislikes: {dish.dislikes}</li>
+                                <li>Procedure:
+                            <p className="d-none d-sm-block">{dish.description}</p>
+                                </li>
+                                
+                            </ul>
+                            <div className="ratings">
+                                <FontAwesomeIcon icon="heart"/> {dish.like}
+                                <FontAwesomeIcon icon="heart-broken"/>{dish.dislikes}
+                            </div>
+                            <Button className="btn btn-info" onClick={handleClick}>Photo</Button>
+                        </CardBody>
+                    </div>
+                </ReactCardFlip>
             </Card>
         );
     }

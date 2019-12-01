@@ -68,7 +68,7 @@ class Page extends React.Component {
               </Col>
           </Navbar>
           <ModalSwitch channel={this.channel}/>
-                  {/* <Footer /> */}
+          <Footer />
         </Router>
     )
   }

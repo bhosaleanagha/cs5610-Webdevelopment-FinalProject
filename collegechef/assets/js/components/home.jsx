@@ -67,31 +67,34 @@ class Home extends React.Component {
     render() {
         const { tags } = this.state;
         return (
-                <Jumbotron className="jumbo" >
-                    <Container >
-                        <div className="row row-header">
-                            <div className="col-12 col-sm-6">
-                                <h1>College Chef</h1>
-                                <p>We take pride in helping the college students be the master chefs in their kitchen.</p>
+            <div>
+                     <Container>
+                        <div className="welcoming_header">
+                            <div>
+                                <h1 className="welcoming"> Welcome To College Chef </h1>
+                                <p className="welcoming_p">We take pride in helping college students be the master chefs in their kitchen.</p>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-9 col-sm-12 col-md-9">
-                                <ReactTags
-                                    tags={tags}
-                                    handleDelete={this.handleDelete}
-                                    handleAddition={this.handleAddition}
-                                    delimiters={delimiters}
-                                    placeholder="List Your Ingredients"
-                                    allowUnique={true} />
-                            </div>
-                            <div className="col-3 col-md-3">
-                                <Button variant="info" onClick={() => this.check()}><FontAwesomeIcon icon="search"/> Search For Recipes</Button>
-                            </div>
+                            <ReactTags
+                                className="react-tags"
+                                inputFieldPosition="top"
+                                tags={tags}
+                                handleDelete={this.handleDelete}
+                                handleAddition={this.handleAddition}
+                                delimiters={delimiters}
+                                placeholder="Separate ingredients with commas"
+                                allowUnique={true} 
+                                />
+
+                        <div className="search_button_wrapper">
+                            <Button className="search_button" variant="outline-dark" size="lg" onClick={() => this.check()}><FontAwesomeIcon icon="search"/> Search For Recipes</Button>
                         </div>
-                        <Recipes root={this.props} />
+
                     </Container>
-                </Jumbotron>
+                    <div>
+                         <Recipes root={this.props} />
+                    </div>
+            </div>
         )
 
     }
