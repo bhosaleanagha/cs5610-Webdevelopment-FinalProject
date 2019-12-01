@@ -46,11 +46,6 @@ class Login extends React.Component {
         this.redirect(path);
       }
 
-      redirect(path) {
-        this.setState({
-          redirect: path,
-        });
-      }
 
     render() {
         if (this.state.redirect) {

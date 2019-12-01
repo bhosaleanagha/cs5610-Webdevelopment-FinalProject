@@ -23,19 +23,26 @@ defmodule Collegechef.GetRecipes do
         recipes
     end
 
+    def api_key do
+      #  System.get_env("APP_API_KEY") || Application.get_env(:collegechef, :api_key)
+      result = "b4c77881e7mshf8367356922dcd6p13c5f6jsn063f0bd528c6"
+    end
+
     def recipe_list(ingredient) do
-        headers = [{:"x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"}, {:"x-rapidapi-key", "96fc031a22msh2956b4e91fafd72p1ce93ajsn1ca2cbaaae07"}]
-        url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=4&ranking=1&ignorePantry=false&ingredients=#{ingredient}"
+        headers = [{:"x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"}, {:"x-rapidapi-key", api_key()}]
+        url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=10&ranking=1&ignorePantry=false&ingredients=#{ingredient}"
         resp = HTTPoison.get!(url, headers)
         data = Jason.decode!(resp.body)
+        Enum.shuffle(data)
+        Enum.shuffle(data)
         data
       end
 
       def org_recipes(ingredients) do
         recipes = recipe_list(ingredients)
 
-        orgganized_result = %{}
-        orgganized_result = Enum.map recipes, fn recipe ->
+        organized_result = %{}
+        organized_result = Enum.map recipes, fn recipe ->
           %{
             id: recipe["id"],
             image: recipe["image"],
@@ -43,8 +50,7 @@ defmodule Collegechef.GetRecipes do
             ingredients: recipe["usedIngredients"]
            }
         end
-
-        orgganized_result
+        organized_result
       end
 
       def getRecipeByIngredients(recipes, ingredients) do
