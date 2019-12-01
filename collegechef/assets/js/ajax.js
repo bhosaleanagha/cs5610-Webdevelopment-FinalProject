@@ -129,7 +129,6 @@ export function submit_password_change(form) {
                 type: 'CHANGE_PASSWORD',
                 data: [resp.data],
             });
-            form.redirect('/');
         } else {
             store.dispatch({
                 type: 'CHANGE_PASSWORD',

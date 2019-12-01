@@ -97,7 +97,7 @@ class RenderMenuItem extends React.Component {
       return (
         <Card key={this.dish.id} className="col-4">
           <CardHeader>
-            <CardImg width="100%" src={this.dish.data} alt={this.dish.name} />
+            <CardImg top width="256px" height="186px" src={this.dish.data} alt={this.dish.name} />
               <CardTitle id={this.dish.id}>
                 {this.dish.name}
               </CardTitle>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState}  from 'react';
 import { connect } from 'react-redux';
 import { Jumbotron, Container, Modal, ModalHeader,
      ModalBody, Button, FormGroup, Form, Label, Input  } from 'reactstrap';
@@ -17,25 +17,24 @@ let Profile = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
 
     return (
         <div>
-            <Jumbotron fluid>
-                <Container>
-                    <p>{session.user_email}</p>
-                     <Form>
-                        <FormGroup>
-                            <Label htmlFor="password">Password</Label>
-                            <Input type="password" id="password" name="password" onChange={
-                                    (ev) => changed({password: ev.target.value})}/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label htmlFor="confirmed_password">Comfirmed Password</Label>
-                            <Input type="password" id="confirmed_password" name="confirmed_password"/>
-                        </FormGroup>
-                        
-                        <Button color="primary" onClick={()=> submit_password_change(this)}>Change</Button>
-                    </Form>
-                </Container>
-            </Jumbotron>
-            <h1>Bookmarked</h1>
+            <Container>
+                <h1 className="profile_title">Chef {session.user_fname + ' ' + session.user_lname}</h1>
+                <h3>Email: {session.user_email}</h3>
+
+                    <Form>
+                    <FormGroup>
+                        <Label htmlFor="password">Password</Label>
+                        <Input type="password" id="password" name="password" onChange={
+                                (ev) => changed({password: ev.target.value})}/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label htmlFor="confirmed_password">Comfirmed Password</Label>
+                        <Input type="password" id="confirmed_password" name="confirmed_password"/>
+                    </FormGroup>
+                    
+                    <Button color="primary" onClick={()=> submit_password_change(this)}>Change Password</Button>
+                </Form>
+            </Container>
         </div>
     );
 })     
