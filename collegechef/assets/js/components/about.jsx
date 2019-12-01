@@ -8,45 +8,34 @@ function About(props) {
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    <h3>About Us</h3>
-                    <br />
+                    <h3 className="welcoming">About CollegeChef</h3>
                 </div>
             </div>
-            <div className="row row-content">
+            <div className="row">
                 <div className="col-12 col-md-6">
-                    <h2>Our History</h2>
-                    <p>Started in 2019, Collegechef started as a Web Development project at Northeastern University. The idea was to help college students be able to make dishes with the ingredients available to them at home.</p>
-                    <p>It also helps in students to see the recipes added by their fellow friends, at college away from home.</p>
-                    <p>The application uses <em>Spoonacular</em>, an API that provides recipes</p>
+                    <h2 className="aboutus_subtitle">CollegeChef History</h2>
+                    <p className="aboutus_statement">Started in 2019, Collegechef started as a Web Development project at Northeastern University. The idea was to help college students be able to make dishes with the ingredients available to them at home.</p>
                 </div>
                 <div className="col-12 col-md-5">
+                     <h2 className="aboutus_subtitle">CollegeChef's Team</h2>
+                     <ul className="aboutus_ul">
+                         <li>Prateeksha Lingashettar</li>
+                         <li>Ruchit Urunkar</li>
+                         <li>Anagha Bhosale</li>
+                         <li>Jonathan Chery</li>
+                     </ul>
+                </div>
+                <div className="col-6 col-md-12">
                     <Card>
-                        <CardHeader className="bg-primary text-white">Facts At a Glance</CardHeader>
+                        <CardHeader className="bg-info text-white">CollegeChef's Attribution</CardHeader>
                         <CardBody>
                             <dl className="row p-1">
-                                <dt className="col-6">Started</dt>
-                                <dd className="col-6">14 Nov. 2019</dd>
-                                <dt className="col-6">Major Stake Holder</dt>
-                                <dd className="col-6">Northeastern University</dd>
-                                <dt className="col-6">Professor and Advisor</dt>
-                                <dd className="col-6">Nat Tuck</dd>
-                                <dt className="col-6">Developers</dt>
-                                <dd className="col-6">4</dd>
+                                <dd className="col-12">Placeholder images are from <a href="https://www.pexels.com/public-domain-images/">Pexel.com</a>, a public domain free images site</dd>
+                                <dd className="col-12">Code snippets are borrowed from <a href="https://github.com/NatTuck/lens/tree/spa4-user-sessions">Nat Tuck's Git Hub</a></dd>
+                                <dd className="col-12">Food API from Spoonacular <a href="https://spoonacular.com/food-api">Spoonacular</a></dd>
+                                <dd className="col-12">Fonts from <a href="https://fonts.google.com/"> Google Fonts</a></dd>
+                                <dd className="col-12">Icons from <a href="https://fontawesome.com/"> Font Awesome</a></dd>
                             </dl>
-                        </CardBody>
-                    </Card>
-                </div>
-                <div className="col-12">
-                    <Card>
-                        <CardBody className="bg-faded">
-                            <blockquote className="blockquote">
-                                <p className="mb-0">You better cut the pizza in four pieces because
-                                        I'm not hungry enough to eat six.</p>
-                                <footer className="blockquote-footer">Yogi Berra,
-                                    <cite title="Source Title">The Wit and Wisdom of Yogi Berra,
-                                        P. Pepe, Diversion Books, 2014</cite>
-                                </footer>
-                            </blockquote>
                         </CardBody>
                     </Card>
                 </div>

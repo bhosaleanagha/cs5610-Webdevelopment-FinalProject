@@ -1,169 +1,174 @@
-    /* This file is for your main application css. */
-    
-    @import "~bootstrap/scss/bootstrap";
-    @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
-    @import url('https://fonts.googleapis.com/css?family=Rochester&display=swap');
-    body {
-        background-image: url('../static/images/background_image2.jpeg');
-        background-repeat: no-repeat;
-    }
-    
-    #root {
-        min-height: 100vh;
-        overflow: hidden;
-        display: block;
-        position: relative;
-        padding-bottom: 100px;
-    }
-    
-    .pagination-wrapper {
-        justify-content: center;
-        margin: 30px;
-    }
-    
-    .welcoming_header {
-        margin: 50px;
-        text-align: center;
-    }
-    
-    .welcoming {
-        color: #FEE8CB;
-        font-family: 'Pacifico', cursive;
-        font-size: 60px;
-    }
-    
-    .welcoming_p {
-        color: #FEE8CB;
-        font-family: 'Rochester', cursive;
-        font-size: 30px;
-    }
-    
-    .header {
-        background-color: #FEE8CB;
-        ;
-    }
-    
-    .react-tags {
-        text-align: center;
-    }
-    
-    .search_button_wrapper {
-        text-align: center;
-    }
-    
-    .search_button {
-        margin: 2%;
-        background-color: #FEE8CB;
-    }
-    
-    .row-content {
-        margin: 0px auto;
-        padding: 50px 0px;
-        border-bottom: 1px ridge;
-        min-height: 400px;
-    }
-    
-    .footer {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: #343a40;
-        color: white;
-        text-align: center;
-    }
-    
-    .footer p {
-        font-size: 15px;
-    }
-    
-    /////
-    .jumbo {
-        height: 100vh;
-    }
-    
-    .address {
-        font-size: 80%;
-        margin: 0px;
-        color: white;
-    }
-    
-    body {
-        padding-top: 50px 0px;
-        z-index: 0;
-    }
-    
-    .modal .modal-header {
-        background-color: #0353A4;
-        color: floralwhite;
-    }
-    
-    .modal .modal-header .close {
-        color: floralwhite;
-    }
-    
-    .modal .modal-body {
-        background-color: white;
-    }
-    
-    .page-enter {
-        opacity: 0.01;
-        transform: translateX(-100%);
-    }
-    
-    .page-enter-active {
-        opacity: 1;
-        transform: translateX(0%);
-        transition: all 300ms ease-in;
-    }
-    
-    .page-exit {
-        opacity: 1;
-        transform: translateX(0%);
-    }
-    
-    .page-exit-active {
-        opacity: 0.01;
-        transform: translateX(-100%);
-        transition: all 300ms ease-out;
-    }
-    
-    div.ReactTags__tags {
-        position: relative;
-    }
-    /* Styles for the input */
-    
-    div.ReactTags__tagInput {
-        width: 200px;
-        border-radius: 2px;
-        display: inline-block;
-    }
-    
-    div.ReactTags__tagInput input.ReactTags__tagInputField,
-    div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
-        height: 31px;
-        margin: 0;
-        font-size: 14px;
-        width: 600px;
-        border: 1px solid black;
-        padding: 0 4px;
-    }
-    /* Styles for selected tags */
-    
-    div.ReactTags__selected span.ReactTags__tag {
-        border: 1px solid black;
-        background: #0353A4;
-        color: white;
-        font-size: 12px;
-        display: inline-block;
-        padding: 5px;
-        margin: 0 5px;
-        cursor: move;
-        border-radius: 2px;
-    }
-    
-    div.ReactTags__selected a.ReactTags__remove {
-        color: black;
-        margin-left: 5px;
-        cursor: pointer;
-    }
+        /* This file is for your main application css. */
+        
+        @import "~bootstrap/scss/bootstrap";
+        @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=Rochester&display=swap');
+        body {
+            background-image: url('../static/images/background_image2.jpeg');
+            background-repeat: no-repeat;
+        }
+        
+        #root {
+            min-height: 100vh;
+            overflow: hidden;
+            display: block;
+            position: relative;
+            padding-bottom: 100px;
+        }
+        
+        .pagination-wrapper {
+            justify-content: center;
+            margin: 30px;
+        }
+        
+        .welcoming_header {
+            margin: 50px;
+            text-align: center;
+        }
+        
+        .welcoming {
+            color: #FEE8CB;
+            font-family: 'Pacifico', cursive;
+            font-size: 60px;
+        }
+        
+        .welcoming_p,
+        .aboutus_subtitle {
+            color: #FEE8CB;
+            font-family: 'Rochester', cursive;
+            font-size: 30px;
+        }
+        
+        .aboutus_statement,
+        .aboutus_ul {
+            font-size: 22px;
+        }
+        
+        .header {
+            background-color: #FEE8CB;
+        }
+        
+        .react-tags {
+            text-align: center;
+        }
+        
+        .search_button_wrapper {
+            text-align: center;
+        }
+        
+        .search_button {
+            margin: 2%;
+            background-color: #FEE8CB;
+        }
+        
+        .row-content {
+            margin: 0px auto;
+            padding: 50px 0px;
+            border-bottom: 1px ridge;
+            min-height: 400px;
+        }
+        
+        .footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+        
+        .footer p {
+            font-size: 25px;
+        }
+        
+        /////
+        .jumbo {
+            height: 100vh;
+        }
+        
+        .address {
+            font-size: 80%;
+            margin: 0px;
+            color: white;
+        }
+        
+        body {
+            padding-top: 50px 0px;
+            z-index: 0;
+        }
+        
+        .modal .modal-header {
+            background-color: #0353A4;
+            color: floralwhite;
+        }
+        
+        .modal .modal-header .close {
+            color: floralwhite;
+        }
+        
+        .modal .modal-body {
+            background-color: white;
+        }
+        
+        .page-enter {
+            opacity: 0.01;
+            transform: translateX(-100%);
+        }
+        
+        .page-enter-active {
+            opacity: 1;
+            transform: translateX(0%);
+            transition: all 300ms ease-in;
+        }
+        
+        .page-exit {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+        
+        .page-exit-active {
+            opacity: 0.01;
+            transform: translateX(-100%);
+            transition: all 300ms ease-out;
+        }
+        
+        div.ReactTags__tags {
+            position: relative;
+        }
+        /* Styles for the input */
+        
+        div.ReactTags__tagInput {
+            width: 200px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+        
+        div.ReactTags__tagInput input.ReactTags__tagInputField,
+        div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+            height: 31px;
+            margin: 0;
+            font-size: 14px;
+            width: 600px;
+            border: 1px solid black;
+            padding: 0 4px;
+        }
+        /* Styles for selected tags */
+        
+        div.ReactTags__selected span.ReactTags__tag {
+            border: 1px solid black;
+            background: #0353A4;
+            color: white;
+            font-size: 12px;
+            display: inline-block;
+            padding: 5px;
+            margin: 0 5px;
+            cursor: move;
+            border-radius: 2px;
+        }
+        
+        div.ReactTags__selected a.ReactTags__remove {
+            color: black;
+            margin-left: 5px;
+            cursor: pointer;
+        }
