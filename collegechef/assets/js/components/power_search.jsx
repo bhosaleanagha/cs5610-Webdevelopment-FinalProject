@@ -50,10 +50,8 @@ class PowerSearch extends React.Component {
         return (
           <div>
                 <Container >
-                    <div className="row row-header">
-                        <div className="col-12 col-sm-6">
-                            <h6>Search through multiple recipes with the ingredients in your friedge.</h6>
-                        </div>
+                    <div className="power_search_title">
+                            <h5><i>Power Search</i> through multiple recipes with the ingredients in your friedge.</h5>
                     </div>
                     <InputGroup className="mb-3">
                         <Form.Control
@@ -61,7 +59,7 @@ class PowerSearch extends React.Component {
                         onChange={(ev) => this.setIngredients(ev.target.value)}
                         />
                         <InputGroup.Append>
-                        <Button variant="outline-primary" onClick={()=> this.submit_powersearch()}>Search For Recipes</Button>
+                          <Button className="power_search_button" variant="light" onClick={()=> this.submit_powersearch()}>Search For Recipes</Button>
                         </InputGroup.Append>
                     </InputGroup>
                     <div className="recipes_cards">
@@ -80,7 +78,7 @@ const DisplayRecipeCard = ({root,recipeResult}) => {
   let recipesCards = Object.values(recipes).map((recipe,index) => {
     return (
       <Col key={index} sm="3">
-        <Card>
+        <Card className="api_card">
           <CardImg top width="256px" height="186px" src={recipe.image} alt="Card image cap" />
           <CardBody>
             <CardTitle>{recipe.name}</CardTitle> 
