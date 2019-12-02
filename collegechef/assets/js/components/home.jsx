@@ -75,6 +75,9 @@ class Home extends React.Component {
                                 <p className="welcoming_p">We take pride in helping college students be the master chefs in their kitchen.</p>
                             </div>
                         </div>
+                        <div className = "row">
+                        <div className = "col-9 col-sm-12 col-md-9">
+                        
                             <ReactTags
                                 className="react-tags"
                                 inputFieldPosition="top"
@@ -84,12 +87,13 @@ class Home extends React.Component {
                                 delimiters={delimiters}
                                 placeholder="Separate ingredients with commas"
                                 allowUnique={true} 
-                                />
-
-                        <div className="search_button_wrapper">
-                            <Button className="search_button" variant="outline-dark" size="lg" onClick={() => this.check()}><FontAwesomeIcon icon="search"/> Search For Recipes</Button>
+                            />
+                         </div>
+                        <div className="col-3 col-md-3">
+                            <Button className="search_button" variant="outline-dark"  onClick={() => this.check()}><FontAwesomeIcon icon="search"/> Search For Recipes</Button>
                         </div>
-
+                        
+                        </div>
                     </Container>
                     <div>
                          <Recipes root={this.props} />

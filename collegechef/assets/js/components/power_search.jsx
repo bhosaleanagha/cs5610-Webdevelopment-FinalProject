@@ -51,7 +51,7 @@ class PowerSearch extends React.Component {
           <div>
                 <Container >
                     <div className="power_search_title">
-                            <h5><i>Power Search</i> through multiple recipes with the ingredients in your friedge.</h5>
+                            <h5><i>Power Search</i> through multiple recipes with the ingredients in your fridge.</h5>
                     </div>
                     <InputGroup className="mb-3">
                         <Form.Control

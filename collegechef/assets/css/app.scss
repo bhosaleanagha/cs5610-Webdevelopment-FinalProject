@@ -20,15 +20,37 @@
             justify-content: center;
             margin: 30px;
         }
+
+        .label_titles {
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+            font-size: 15px;
+            background-color: rgb(238, 214, 182);
+            opacity: 0.8;
+            /*padding-bottom: 0.2ex;
+            padding-top: 0.2ex;
+            padding-left: 0.2ex;
+            padding-right: 0.2ex;
+            border-width: 1px;
+            border-style: solid;
+            border-color: white;
+            border-radius: 10px;*/
+            
+        }
         
         .welcoming_header {
             margin: 50px;
+            color: #FEE8CB;
+            font-family: 'Pacifico', cursive;
             text-align: center;
+            padding-bottom: 0.1ex;
+            font-size: 40px;
         }
         
         .welcoming {
             color: #FEE8CB;
             font-family: 'Pacifico', cursive;
+            text-align: center;
             font-size: 60px;
         }
         
@@ -144,11 +166,12 @@
             width: 200px;
             border-radius: 2px;
             display: inline-block;
+            
         }
         
         div.ReactTags__tagInput input.ReactTags__tagInputField,
         div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
-            height: 31px;
+            height: 30px;
             margin: 0;
             font-size: 14px;
             width: 600px;

@@ -108,7 +108,7 @@ class AddRecipes extends Component {
                         <div className="col-12 col-md-9">
                             <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                                 <Row className="form-group">
-                                    <Label htmlFor="name" md={2}>Recipe Name</Label>
+                                    <Label htmlFor="name" md={2} className="label_titles">Recipe Name</Label>
                                     <Col md={10}>
                                         <Control.text model=".name" id="name" name="name"
                                             placeholder="Name of the Recipe"
@@ -130,7 +130,7 @@ class AddRecipes extends Component {
                                     </Col>
                                 </Row>
                                 <Row className="form-group">
-                                    <Label htmlFor="data" md={2}>Upload picture:</Label>
+                                    <Label htmlFor="data" md={2} className="label_titles">Upload picture:</Label>
                                     <Col md={8}>
                                         <Control.file model=".data" id="data" name="data"
                                             className="form-control"
@@ -139,7 +139,7 @@ class AddRecipes extends Component {
                                 </Row>
 
                                 <Row className="form-group">
-                                    <Label htmlFor="cuisine" md={2}>Cuisine</Label>
+                                    <Label htmlFor="cuisine" md={2} className="label_titles">Cuisine</Label>
                                     <Col md={{ size: 3 }}>
                                         <Control.select model=".cuisine" className="form-control" name="cuisine" >
                                             <option> </option>
@@ -155,7 +155,7 @@ class AddRecipes extends Component {
                                     </Col>
                                 </Row>
                                 <Row className="form-group">
-                                    <Label htmlFor="diet" md={2}>Diet</Label>
+                                    <Label htmlFor="diet" md={2} className="label_titles">Diet</Label>
                                     <Col md={{ size: 3 }}>
                                         <Control.select model=".diet" className="form-control" name="diet" >
                                             <option> </option>
@@ -166,7 +166,7 @@ class AddRecipes extends Component {
                                     </Col>
                                 </Row>
                                 <Row className="form-group">
-                                    <Label htmlFor="duration" md={2}>Duration in minutes</Label>
+                                    <Label htmlFor="duration" md={2} className="label_titles">Duration in minutes</Label>
                                     <Col md={10}>
                                         <Control.text model=".duration" id="duration" name="duration"
                                             placeholder="Duration to cook"
@@ -189,7 +189,7 @@ class AddRecipes extends Component {
                                     </Col>
                                 </Row>
                                 <Row className="form-group">
-                                    <Label htmlFor="addIngredient" md={2}>Add Ingredient:</Label>
+                                    <Label htmlFor="addIngredient" md={2} className="label_titles">Add Ingredient:</Label>
                                     <Col md={{ size: 3 }}>
                                         <Control.select model=".ingredients" className="form-control" name="ingredients" multiple={true}>
                                             <IngredientList />
@@ -212,7 +212,7 @@ class AddRecipes extends Component {
                                 </Row>
 
                                 <Row className="form-group">
-                                    <Label htmlFor="procedure" md={2}>Preparation Steps:</Label>
+                                    <Label htmlFor="procedure" md={2} className="label_titles">Preparation Steps:</Label>
                                     <Col md={10}>
                                         <Control.textarea model=".description" className="form-control" id="description" name="description" rows="12">
 

@@ -118,7 +118,7 @@ export function submit_password_change(form) {
         session0 = JSON.parse(session0);
         user_id = session0.user_id;
     }
-
+    
     put('/users/' + user_id, {
         user: {
             password: data.password,
@@ -129,6 +129,8 @@ export function submit_password_change(form) {
                 type: 'CHANGE_PASSWORD',
                 data: [resp.data],
             });
+            alert("Password has been changed successfully");
+            form.redirect('/');
         } else {
             store.dispatch({
                 type: 'CHANGE_PASSWORD',
@@ -193,7 +195,6 @@ export function add_recipe(cuisine, description, diet, duration, name, data, ing
             }
         }).then((resp) => {
             if (resp.data) {
-                console.log("Success");
                 store.dispatch({
                     type: 'ADDED_RECIPE',
                     data: [resp.data],

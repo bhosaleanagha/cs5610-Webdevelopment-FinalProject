@@ -109,14 +109,13 @@ function ModalSwitch(props) {
 
 let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) => {
   let location = useLocation();
-
+  
   function logout() {
     localStorage.removeItem('session');
     dispatch({
       type: 'LOG_OUT',
     });
-    <Redirect to="/"></Redirect>
-    window.location.reload(false);
+  
   }
 
   if (session) {
@@ -134,7 +133,7 @@ let Session = connect(({ session }) => ({ session }))(({ session, dispatch }) =>
             <Dropdown.Item as={NavLink} to="/my-recipes">My Recipes</Dropdown.Item>
             <Dropdown.Item as={NavLink} to="/add-recipes">Add Recipes</Dropdown.Item>
             <Dropdown.Divider />
-              <Dropdown.Item as={Link} to="/" onClick={logout} >Logout </Dropdown.Item>            
+              <Dropdown.Item as={NavLink} to="/" onClick={logout}>Logout</Dropdown.Item>            
           </Dropdown.Menu>
         </Dropdown>
       </Nav>
